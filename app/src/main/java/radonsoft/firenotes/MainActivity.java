@@ -7,7 +7,6 @@ import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
 import android.view.MenuItem;
-import android.widget.TextView;
 
 import radonsoft.firenotes.Fragments.NoteFragment;
 import radonsoft.firenotes.Fragments.SettingsFragment;
@@ -26,7 +25,7 @@ public class MainActivity extends AppCompatActivity {
                 case R.id.navigation_notes:
                     navtrans.replace(R.id.content, new NoteFragment()).commit();
                     return true;
-                case R.id.navigation_dashboard:
+                case R.id.navigation_settings:
                     navtrans.replace(R.id.content, new SettingsFragment()).commit();
                     return true;
             }
