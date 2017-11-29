@@ -12,7 +12,6 @@ import radonsoft.firenotes.Fragments.NoteFragment;
 import radonsoft.firenotes.Fragments.SettingsFragment;
 
 public class MainActivity extends AppCompatActivity {
-    NoteFragment notes = new NoteFragment();
     FragmentTransaction ftrans = getSupportFragmentManager().beginTransaction();
     private BottomNavigationView.OnNavigationItemSelectedListener mOnNavigationItemSelectedListener
             = new BottomNavigationView.OnNavigationItemSelectedListener() {
@@ -29,10 +28,8 @@ public class MainActivity extends AppCompatActivity {
                     navtrans.replace(R.id.content, new SettingsFragment()).commit();
                     return true;
             }
-
             return false;
         }
-
     };
 
     @Override
