@@ -5,6 +5,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -24,6 +25,13 @@ class RecyclerViewHolder extends RecyclerView.ViewHolder{
         super(itemView);
         title = (TextView)itemView.findViewById(R.id.titlee);
         text = (TextView)itemView.findViewById(R.id.textt);
+
+        itemView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Toast.makeText(view.getContext(), "Ты жмакнул на заметку", Toast.LENGTH_SHORT).show();
+            }
+        });
     }
 }
 
