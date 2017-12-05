@@ -12,11 +12,15 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
+import android.widget.Toast;
 
 import radonsoft.firenotes.Fragments.NoteFragment;
 import radonsoft.firenotes.Fragments.SettingsFragment;
 
 public class MainActivity extends AppCompatActivity {
+
+    NoteFragment notes = new NoteFragment();
+
     FragmentTransaction ftrans = getSupportFragmentManager().beginTransaction();
     private BottomNavigationView.OnNavigationItemSelectedListener mOnNavigationItemSelectedListener
             = new BottomNavigationView.OnNavigationItemSelectedListener() {
@@ -61,9 +65,20 @@ public class MainActivity extends AppCompatActivity {
         ftrans.commit();
     }
 
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        if (data == null) {
+            return;
+        }
+        String toShowTitle = data.getStringExtra("title");
+        String toShowText = data.getStringExtra("title");
+        Toast.makeText(this, toShowTitle, Toast.LENGTH_SHORT).show();
+    }
+
+
     public void changeActivity(){
         Intent intent = new Intent(this, NoteActivity.class);
-        startActivity(intent);
+        startActivityForResult(intent, 1);
     }
 
     @Override

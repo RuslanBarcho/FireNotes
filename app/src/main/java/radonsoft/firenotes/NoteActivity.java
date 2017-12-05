@@ -7,13 +7,23 @@ import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
+import android.widget.EditText;
+
+import radonsoft.firenotes.Fragments.NoteFragment;
 
 public class NoteActivity extends AppCompatActivity {
+
+    EditText title;
+    EditText text;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_note);
+
+        title = (EditText) findViewById(R.id.title_edit);
+        text = (EditText) findViewById(R.id.note_edit);
+
         Toolbar toolbar = (Toolbar) findViewById(R.id.note_toolbar);
         setSupportActionBar(toolbar);
         getSupportActionBar().setTitle("New note");
@@ -43,17 +53,23 @@ public class NoteActivity extends AppCompatActivity {
     }
 
     public void changeActivity(){
-        Intent intent = new Intent(this, MainActivity.class);
-        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-        startActivity(intent);
+        NoteFragment notes = new NoteFragment();
+        Bundle bundle = new Bundle();
+        bundle.putString("title", title.getText().toString());
+        bundle.putString("text", text.getText().toString());
+        notes.setArguments(bundle);
+
+        Intent intent = new Intent();
+        intent.putExtra("title", title.getText().toString());
+        intent.putExtra("text", text.getText().toString());
+        setResult(RESULT_OK, intent);
+        finish();
     }
 
     @Override
     public void onBackPressed()
     {
-        Intent intent = new Intent(this, MainActivity.class);
-        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-        startActivity(intent);
+        changeActivity();
         super.onBackPressed();  // optional depending on your needs
     }
 }
