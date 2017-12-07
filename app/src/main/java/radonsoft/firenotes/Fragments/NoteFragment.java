@@ -1,5 +1,6 @@
 package radonsoft.firenotes.Fragments;
 
+import android.arch.persistence.room.Room;
 import android.content.Context;
 import android.net.Uri;
 import android.os.Bundle;
@@ -14,6 +15,7 @@ import android.widget.Toast;
 import java.util.ArrayList;
 import java.util.List;
 
+import radonsoft.firenotes.AppDatabase;
 import radonsoft.firenotes.Helpers.RecyclerViewAdapter;
 import radonsoft.firenotes.Models.Note;
 import radonsoft.firenotes.R;
@@ -30,6 +32,8 @@ public class NoteFragment extends Fragment {
 
     Bundle bundle;
 
+    AppDatabase db;
+
     List<Note> noteList = new ArrayList<Note>();
 
     @Override
@@ -37,29 +41,25 @@ public class NoteFragment extends Fragment {
                              Bundle savedInstanceState) {
         mRootView = inflater.inflate(R.layout.fragment_note, container, false);
         recyclerView = (RecyclerView) mRootView.findViewById(R.id.recycler);
-
-        bundle = getArguments();
-        if (bundle != null){
-            title = getArguments().getString("title");
-            text = getArguments().getString("text");
-        }
-
         initialNotes();
-        layoutManager = new LinearLayoutManager(getContext());
-        recyclerView.setLayoutManager(layoutManager);
-        adapter = new RecyclerViewAdapter(noteList);
-        recyclerView.setAdapter(adapter);
-
         return mRootView;
     }
 
     public void initialNotes(){
-        if (bundle != null){
-            noteList.add(new Note(title, text));
-        }
-        noteList.add(new Note("Test title one", getString(R.string.loremipsumone)));
-        noteList.add(new Note("Test title two", getString(R.string.loremipsumtwo)));
-        noteList.add(new Note("Test title three", getString(R.string.loremipsumthree)));
+        db = Room.databaseBuilder(getContext(), AppDatabase.class, "production")
+                .allowMainThreadQueries()
+                .build();
+        noteList = db.noteDao().getAllNotes();
+        layoutManager = new LinearLayoutManager(getContext());
+        recyclerView.setLayoutManager(layoutManager);
+        adapter = new RecyclerViewAdapter(noteList);
+        recyclerView.setAdapter(adapter);
+    }
+
+    @Override
+    public void onResume() {
+        initialNotes();
+        super.onResume();
     }
 
 }

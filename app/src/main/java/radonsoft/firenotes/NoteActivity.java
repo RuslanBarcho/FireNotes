@@ -1,5 +1,6 @@
 package radonsoft.firenotes;
 
+import android.arch.persistence.room.Room;
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -10,11 +11,14 @@ import android.view.MenuItem;
 import android.widget.EditText;
 
 import radonsoft.firenotes.Fragments.NoteFragment;
+import radonsoft.firenotes.Models.Note;
 
 public class NoteActivity extends AppCompatActivity {
 
     EditText title;
     EditText text;
+    AppDatabase db;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -27,6 +31,10 @@ public class NoteActivity extends AppCompatActivity {
         Toolbar toolbar = (Toolbar) findViewById(R.id.note_toolbar);
         setSupportActionBar(toolbar);
         getSupportActionBar().setTitle("New note");
+
+        db = Room.databaseBuilder(getApplicationContext(), AppDatabase.class, "production")
+                .allowMainThreadQueries()
+                .build();
     }
 
     @Override
@@ -45,6 +53,8 @@ public class NoteActivity extends AppCompatActivity {
 
         //noinspection SimplifiableIfStatement
         if (id == R.id.navbar_done) {
+            // TODO: save to database
+            db.noteDao().insertAll(new Note(title.getText().toString(), text.getText().toString() ));
             changeActivity();
             return true;
         }
@@ -53,11 +63,6 @@ public class NoteActivity extends AppCompatActivity {
     }
 
     public void changeActivity(){
-        NoteFragment notes = new NoteFragment();
-        Bundle bundle = new Bundle();
-        bundle.putString("title", title.getText().toString());
-        bundle.putString("text", text.getText().toString());
-        notes.setArguments(bundle);
 
         Intent intent = new Intent();
         intent.putExtra("title", title.getText().toString());

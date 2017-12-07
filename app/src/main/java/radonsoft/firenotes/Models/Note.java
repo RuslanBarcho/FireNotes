@@ -1,11 +1,21 @@
 package radonsoft.firenotes.Models;
 
+import android.arch.persistence.room.ColumnInfo;
+import android.arch.persistence.room.Entity;
+import android.arch.persistence.room.PrimaryKey;
+
 /**
  * Created by RRCFo on 29.11.2017.
  */
 
+@Entity
 public class Note {
+
+    @PrimaryKey(autoGenerate = true)
+    private int id;
+    @ColumnInfo(name = "title")
     private String title;
+    @ColumnInfo(name = "text")
     private String text;
 
     public Note(){
@@ -15,6 +25,13 @@ public class Note {
     public Note(String title, String text){
         this.title = title;
         this.text = text;
+    }
+    public int getId(){
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
     }
 
     public String getTitle() {
