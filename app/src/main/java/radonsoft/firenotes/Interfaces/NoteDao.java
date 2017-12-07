@@ -3,6 +3,7 @@ package radonsoft.firenotes.Interfaces;
 import android.arch.persistence.room.Dao;
 import android.arch.persistence.room.Delete;
 import android.arch.persistence.room.Insert;
+import android.arch.persistence.room.OnConflictStrategy;
 import android.arch.persistence.room.Query;
 
 import java.util.List;
@@ -17,7 +18,10 @@ public interface NoteDao {
     @Query("SELECT * FROM note")
     List<Note> getAllNotes();
 
-    @Insert
+    @Query("SELECT * FROM note WHERE id = :id")
+    List<Note> getListById(int id);
+
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
     void insertAll(Note... notes);
 
     @Delete

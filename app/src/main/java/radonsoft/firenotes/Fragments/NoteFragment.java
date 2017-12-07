@@ -16,6 +16,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import radonsoft.firenotes.AppDatabase;
+import radonsoft.firenotes.FireNotes;
 import radonsoft.firenotes.Helpers.RecyclerViewAdapter;
 import radonsoft.firenotes.Models.Note;
 import radonsoft.firenotes.R;
@@ -23,18 +24,16 @@ import radonsoft.firenotes.R;
 
 public class NoteFragment extends Fragment {
     View mRootView;
+
     RecyclerView recyclerView;
     RecyclerViewAdapter adapter;
     RecyclerView.LayoutManager layoutManager;
 
-    String title;
-    String text;
-
-    Bundle bundle;
-
     AppDatabase db;
 
-    List<Note> noteList = new ArrayList<Note>();
+    public static int position;
+
+    public static List<Note> noteList = new ArrayList<Note>();
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -42,6 +41,7 @@ public class NoteFragment extends Fragment {
         mRootView = inflater.inflate(R.layout.fragment_note, container, false);
         recyclerView = (RecyclerView) mRootView.findViewById(R.id.recycler);
         initialNotes();
+
         return mRootView;
     }
 
