@@ -54,6 +54,13 @@ public class NoteFragment extends Fragment {
         recyclerView.setLayoutManager(layoutManager);
         adapter = new RecyclerViewAdapter(noteList);
         recyclerView.setAdapter(adapter);
+        adapter.setOnClickListener(new OnItemClickListener() {
+            @Override
+            public void onClick(int position) {
+                NoteFragment.position = getAdapterPosition();
+                Toast.makeText(view.getContext(), "Ты жмакнул на заметку" + NoteFragment.position, Toast.LENGTH_SHORT).show();
+            } 
+        });
     }
 
     @Override
