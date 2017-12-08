@@ -41,6 +41,7 @@ public class NoteFragment extends Fragment {
                              Bundle savedInstanceState) {
         mRootView = inflater.inflate(R.layout.fragment_note, container, false);
         Toolbar toolbar = (Toolbar) mRootView.findViewById(R.id.main_toolbar);
+        getActivity().setTitle("Notes");
         AppCompatActivity activity = new AppCompatActivity();
         setHasOptionsMenu(true);
         recyclerView = (RecyclerView) mRootView.findViewById(R.id.recycler);

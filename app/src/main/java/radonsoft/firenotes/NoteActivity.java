@@ -52,8 +52,9 @@ public class NoteActivity extends AppCompatActivity {
 
         //noinspection SimplifiableIfStatement
         if (id == R.id.navbar_done) {
-            // TODO: save to database
-            db.noteDao().insertAll(new Note(title.getText().toString(), text.getText().toString() ));
+            if (! title.getText().toString().equals("") & ! text.getText().toString().equals("")){
+                db.noteDao().insertAll(new Note(title.getText().toString(), text.getText().toString() ));
+            }
             changeActivity();
             return true;
         }
@@ -62,7 +63,6 @@ public class NoteActivity extends AppCompatActivity {
     }
 
     public void changeActivity(){
-
         Intent intent = new Intent();
         intent.putExtra("title", title.getText().toString());
         intent.putExtra("text", text.getText().toString());

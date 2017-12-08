@@ -76,10 +76,8 @@ public class MainActivity extends AppCompatActivity {
         Toast.makeText(this, toShowTitle, Toast.LENGTH_SHORT).show();
     }
 
-
     public void changeActivity(){
         Intent intent = new Intent(this, NoteActivity.class);
         startActivityForResult(intent, 1);
     }
-
 }
