@@ -49,7 +49,6 @@ public class NoteFragment extends Fragment {
         return mRootView;
     }
 
-
     public void initialNotes() {
         db = Room.databaseBuilder(getContext(), AppDatabase.class, "production")
                 .allowMainThreadQueries()

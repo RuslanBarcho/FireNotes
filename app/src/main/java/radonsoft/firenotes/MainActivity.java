@@ -21,6 +21,8 @@ public class MainActivity extends AppCompatActivity {
     NoteFragment notes = new NoteFragment();
     AppDatabase db;
 
+    android.support.v4.app.FragmentTransaction prefsTrans = getSupportFragmentManager().beginTransaction();
+
     FragmentTransaction ftrans = getSupportFragmentManager().beginTransaction();
     private BottomNavigationView.OnNavigationItemSelectedListener mOnNavigationItemSelectedListener
             = new BottomNavigationView.OnNavigationItemSelectedListener() {
@@ -33,8 +35,7 @@ public class MainActivity extends AppCompatActivity {
                 case R.id.navigation_notes:
                     navtrans.replace(R.id.content, new NoteFragment()).commit();
                     return true;
-                case R.id.navigation_settings
-                        :
+                case R.id.navigation_settings:
                     navtrans.replace(R.id.content, new SettingsFragment()).commit();
                     return true;
             }
