@@ -6,6 +6,7 @@ import android.support.v4.app.Fragment;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.StaggeredGridLayoutManager;
 import android.support.v7.widget.Toolbar;
 import android.view.ActionMode;
 import android.view.LayoutInflater;
@@ -14,9 +15,12 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.LinearLayout;
 import android.widget.Toast;
 
 import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Collections;
 import java.util.List;
 
 import radonsoft.firenotes.AppDatabase;
@@ -46,7 +50,6 @@ public class NoteFragment extends Fragment {
         mRootView = inflater.inflate(R.layout.fragment_note, container, false);
         toolbar = (Toolbar) mRootView.findViewById(R.id.main_toolbar);
         getActivity().setTitle("Notes");
-        AppCompatActivity activity = new AppCompatActivity();
         setHasOptionsMenu(true);
         recyclerView = (RecyclerView) mRootView.findViewById(R.id.recycler);
         initialNotes();
@@ -54,26 +57,39 @@ public class NoteFragment extends Fragment {
     }
 
     public void initialNotes() {
+
+        // Initial and build database
         db = Room.databaseBuilder(getContext(), AppDatabase.class, "production")
                 .allowMainThreadQueries()
                 .build();
+
+        // Get list of notes from database
         noteList = db.noteDao().getAllNotes();
+        Collections.reverse(noteList);
+
+        // Configure recyclerview
+        StaggeredGridLayoutManager staggeredGridLayoutManager = new StaggeredGridLayoutManager(2, 1);
+        staggeredGridLayoutManager.setAutoMeasureEnabled(true);
+
         LinearLayoutManager mLayoutManager = new LinearLayoutManager(getContext());
         mLayoutManager.setReverseLayout(true);
         mLayoutManager.setStackFromEnd(true);
-        recyclerView.setLayoutManager(mLayoutManager);
+
+        recyclerView.setLayoutManager(staggeredGridLayoutManager);
         adapter = new RecyclerViewAdapter(noteList);
         recyclerView.setAdapter(adapter);
+
+        // Set listeners on items by POSITION
         adapter.setItemClickListener(new RecyclerViewAdapter.OnItemClickListener() {
             @Override
             public void onClick(int position) {
-                NoteFragment.position = position;
+                NoteFragment.position = noteList.size() - position;
                 Toast.makeText(getContext(), "Ты жмакнул на заметку " + NoteFragment.position, Toast.LENGTH_SHORT).show();
                 if (mActionMode != null & !toDelete.contains(position)){
                     toDelete.add(position);
                 } else {
                     if(toDelete.size()!= 0){
-                        toDelete.remove(position);
+                        toDelete.remove(toDelete.indexOf(position));
                     }
                 }
             }
@@ -122,8 +138,8 @@ public class NoteFragment extends Fragment {
                 case R.id.action_delete:
                     Toast.makeText(getContext(), "Нажата кнопка удалить ", Toast.LENGTH_SHORT).show();
                     deleteNotes();
+                    mActionMode.finish();
                     break;
-
                 default:
 
                     break;
@@ -135,20 +151,9 @@ public class NoteFragment extends Fragment {
         public void onDestroyActionMode(ActionMode actionMode) {
             mActionMode = null;
             toDelete.clear();
+            initialNotes();
         }
     };
-
-    @Override
-    public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
-        super.onCreateOptionsMenu(menu, inflater);
-    }
-
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        int id = item.getItemId();
-
-        return super.onOptionsItemSelected(item);
-    }
 
     @Override
     public void onResume() {

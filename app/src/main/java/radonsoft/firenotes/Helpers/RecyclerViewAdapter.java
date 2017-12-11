@@ -1,10 +1,12 @@
 package radonsoft.firenotes.Helpers;
 
+import android.graphics.Color;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import java.util.ArrayList;
@@ -17,6 +19,9 @@ import radonsoft.firenotes.R;
  * Created by RRCFo on 29.11.2017.
  */
 public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapter.RecyclerViewHolder>{
+
+    private ArrayList<Integer> selectedItems = new ArrayList<Integer>();
+    private boolean isSelectMode = false;
 
     private List<Note> noteList = new ArrayList<Note>();
 
@@ -43,6 +48,15 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
             @Override
             public void onClick(View view) {
                 if (itemClickListener != null) itemClickListener.onClick(holder.getAdapterPosition());
+                if (isSelectMode){
+                    if (selectedItems.contains(position)){
+                        holder.background.setBackgroundColor(Color.parseColor("#ffffff"));
+                        selectedItems.remove(selectedItems.indexOf(position));
+                    } else{
+                        holder.background.setBackgroundColor(Color.parseColor("#AED581"));
+                        selectedItems.add(position);
+                    }
+                }
                 // NoteFragment.position = getAdapterPosition();
                 // Toast.makeText(view.getContext(), "Ты жмакнул на заметку" + NoteFragment.position, Toast.LENGTH_SHORT).show();
             }
@@ -50,6 +64,11 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
         holder.itemView.setOnLongClickListener(new View.OnLongClickListener() {
             @Override
             public boolean onLongClick(View view) {
+                if (!isSelectMode){
+                    isSelectMode = true;
+                    holder.background.setBackgroundColor(Color.parseColor("#AED581"));
+                    selectedItems.add(position);
+                }
                 if (itemLongClickListener != null) itemLongClickListener.onClick(holder.getAdapterPosition());
                 return true;
             }
@@ -73,11 +92,13 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
 
         public TextView title;
         public TextView text;
+        public LinearLayout background;
 
         public RecyclerViewHolder(View itemView) {
             super(itemView);
             title = (TextView) itemView.findViewById(R.id.titlee);
             text = (TextView) itemView.findViewById(R.id.textt);
+            background = (LinearLayout) itemView.findViewById(R.id.item_background);
         }
 
     }
