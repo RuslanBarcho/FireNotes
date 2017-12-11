@@ -4,10 +4,10 @@ import android.arch.persistence.room.Room;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v7.app.AppCompatActivity;
-import android.view.ActionMode;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
+import android.view.ActionMode;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -21,7 +21,6 @@ import java.util.List;
 
 import radonsoft.firenotes.AppDatabase;
 import radonsoft.firenotes.Helpers.RecyclerViewAdapter;
-import radonsoft.firenotes.MainActivity;
 import radonsoft.firenotes.Models.Note;
 import radonsoft.firenotes.R;
 
@@ -73,7 +72,9 @@ public class NoteFragment extends Fragment {
                 if (mActionMode != null & !toDelete.contains(position)){
                     toDelete.add(position);
                 } else {
-                    toDelete.remove(position);
+                    if(toDelete.size()!= 0){
+                        toDelete.remove(position);
+                    }
                 }
             }
         });
@@ -98,7 +99,6 @@ public class NoteFragment extends Fragment {
         }
         initialNotes();
         toDelete.clear();
-
     }
 
     private ActionMode.Callback mActionCallback = new ActionMode.Callback() {
@@ -134,6 +134,7 @@ public class NoteFragment extends Fragment {
         @Override
         public void onDestroyActionMode(ActionMode actionMode) {
             mActionMode = null;
+            toDelete.clear();
         }
     };
 
