@@ -18,7 +18,7 @@ import radonsoft.firenotes.Fragments.SettingsFragment;
 
 public class MainActivity extends AppCompatActivity {
 
-    NoteFragment notes = new NoteFragment();
+    NoteFragment noteFragment = new NoteFragment();
     AppDatabase db;
 
     android.support.v4.app.FragmentTransaction prefsTrans = getSupportFragmentManager().beginTransaction();
@@ -79,6 +79,7 @@ public class MainActivity extends AppCompatActivity {
 
     public void changeActivity(){
         Intent intent = new Intent(this, NoteActivity.class);
+        intent.putExtra("editMode", false);
         startActivityForResult(intent, 1);
     }
 }

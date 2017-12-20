@@ -12,11 +12,11 @@ import android.arch.persistence.room.PrimaryKey;
 public class Note {
 
     @PrimaryKey(autoGenerate = true)
-    private int id;
+    public int id;
     @ColumnInfo(name = "title")
-    private String title;
+    public String title;
     @ColumnInfo(name = "text")
-    private String text;
+    public String text;
 
     public Note(){
 

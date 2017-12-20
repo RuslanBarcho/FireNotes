@@ -1,9 +1,9 @@
 package radonsoft.firenotes.Fragments;
 
 import android.arch.persistence.room.Room;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
-import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.StaggeredGridLayoutManager;
@@ -15,17 +15,16 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.LinearLayout;
 import android.widget.Toast;
 
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
 
 import radonsoft.firenotes.AppDatabase;
 import radonsoft.firenotes.Helpers.RecyclerViewAdapter;
 import radonsoft.firenotes.Models.Note;
+import radonsoft.firenotes.NoteActivity;
 import radonsoft.firenotes.R;
 
 
@@ -84,7 +83,10 @@ public class NoteFragment extends Fragment {
             @Override
             public void onClick(int position) {
                 NoteFragment.position = noteList.size() - position;
-                Toast.makeText(getContext(), "Ты жмакнул на заметку " + NoteFragment.position, Toast.LENGTH_SHORT).show();
+                Toast.makeText(getContext(), "Ты жмакнул на заметку " + position, Toast.LENGTH_SHORT).show();
+                if (mActionMode == null){
+                    changeActivity(position);
+                }
                 if (mActionMode != null & !toDelete.contains(position)){
                     toDelete.add(position);
                 } else {
@@ -117,10 +119,17 @@ public class NoteFragment extends Fragment {
         toDelete.clear();
     }
 
+    public void changeActivity(int pos){
+        Intent intent = new Intent(getContext(), NoteActivity.class);
+        intent.putExtra("editMode", true);
+        intent.putExtra("ID", pos);
+        startActivityForResult(intent, 1);
+    }
+
     private ActionMode.Callback mActionCallback = new ActionMode.Callback() {
         @Override
         public boolean onCreateActionMode(ActionMode actionMode, Menu menu) {
-            Toast.makeText(getContext(), "Ты долго жмакнул на заметку " + NoteFragment.position, Toast.LENGTH_SHORT).show();
+            Toast.makeText(getContext(), "Ты долго жмакнул на заметку " + position, Toast.LENGTH_SHORT).show();
             MenuInflater inflater = getActivity().getMenuInflater();
             inflater.inflate(R.menu.action_mode_notes, menu);
             return true;
@@ -168,5 +177,4 @@ public class NoteFragment extends Fragment {
         }
         super.onPause();
     }
-
 }

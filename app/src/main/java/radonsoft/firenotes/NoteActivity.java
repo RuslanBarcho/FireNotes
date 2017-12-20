@@ -9,6 +9,9 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.EditText;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import radonsoft.firenotes.Models.Note;
 
 public class NoteActivity extends AppCompatActivity {
@@ -17,12 +20,16 @@ public class NoteActivity extends AppCompatActivity {
     EditText text;
     private boolean ifEdit;
     AppDatabase db;
-
+    int noteID;
+    public static List<Note> noteList = new ArrayList<Note>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_note);
+
+        ifEdit = getIntent().getBooleanExtra("editMode", false);
+        noteID = getIntent().getIntExtra("ID", 0);
 
         title = (EditText) findViewById(R.id.title_edit);
         text = (EditText) findViewById(R.id.note_edit);
@@ -34,6 +41,14 @@ public class NoteActivity extends AppCompatActivity {
         db = Room.databaseBuilder(getApplicationContext(), AppDatabase.class, "production")
                 .allowMainThreadQueries()
                 .build();
+
+        if (ifEdit){
+            noteList = db.noteDao().getAllNotes();
+            int pos = noteList.size() - noteID - 1;
+            Note note = noteList.get(pos);
+            title.setText(note.title);
+            text.setText(note.text);
+        }
     }
 
     @Override
@@ -52,8 +67,19 @@ public class NoteActivity extends AppCompatActivity {
 
         //noinspection SimplifiableIfStatement
         if (id == R.id.navbar_done) {
-            if (! title.getText().toString().equals("") & ! text.getText().toString().equals("")){
-                db.noteDao().insertAll(new Note(title.getText().toString(), text.getText().toString() ));
+            if (ifEdit) {
+                if (!title.getText().toString().equals("") & !text.getText().toString().equals("")) {
+                    noteList = db.noteDao().getAllNotes();
+                    int pos = noteList.size() - noteID - 1;
+                    Note note = noteList.get(pos);
+                    note.title = title.getText().toString();
+                    note.text = text.getText().toString();
+                    db.noteDao().update(noteList.get(pos));
+                }
+            } else {
+                if (!title.getText().toString().equals("") & !text.getText().toString().equals("")) {
+                    db.noteDao().insertAll(new Note(title.getText().toString(), text.getText().toString()));
+                }
             }
             changeActivity();
             return true;
@@ -62,7 +88,7 @@ public class NoteActivity extends AppCompatActivity {
         return super.onOptionsItemSelected(item);
     }
 
-    public void changeActivity(){
+    public void changeActivity() {
         Intent intent = new Intent();
         intent.putExtra("title", title.getText().toString());
         intent.putExtra("text", text.getText().toString());
@@ -71,8 +97,7 @@ public class NoteActivity extends AppCompatActivity {
     }
 
     @Override
-    public void onBackPressed()
-    {
+    public void onBackPressed() {
         changeActivity();
         super.onBackPressed();  // optional depending on your needs
     }
