@@ -12,6 +12,6 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:gravity="center"
-        android:text="Here will be some settings!"
+        android:text="Here will be some settings! App now in test mode %in this build test adding, deleting and editing notes, I need to build stable database fisrt%"
         android:textSize="20sp" />
 </LinearLayout>

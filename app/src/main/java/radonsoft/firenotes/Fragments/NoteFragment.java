@@ -92,6 +92,9 @@ public class NoteFragment extends Fragment {
                 } else {
                     if(toDelete.size()!= 0){
                         toDelete.remove(toDelete.indexOf(position));
+                        if (toDelete.size() == 0){
+                            mActionMode.finish();
+                        }
                     }
                 }
             }
@@ -117,6 +120,7 @@ public class NoteFragment extends Fragment {
         }
         initialNotes();
         toDelete.clear();
+
     }
 
     public void changeActivity(int pos){
