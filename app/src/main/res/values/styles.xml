@@ -10,6 +10,9 @@
         <item name="preferenceTheme">@style/PreferenceThemeOverlay</item>
         <item name="android:windowActionModeOverlay">true</item>
         <item name="windowActionModeOverlay">true</item>
+
     </style>
+
+    <style name="date_picker_theme" parent="@android:style/Widget.DatePicker"> </style>
 
 </resources>

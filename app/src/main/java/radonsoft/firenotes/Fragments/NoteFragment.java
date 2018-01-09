@@ -56,7 +56,6 @@ public class NoteFragment extends Fragment {
     }
 
     public void initialNotes() {
-
         // Initial and build database
         db = Room.databaseBuilder(getContext(), AppDatabase.class, "production")
                 .allowMainThreadQueries()
@@ -120,7 +119,6 @@ public class NoteFragment extends Fragment {
         }
         initialNotes();
         toDelete.clear();
-
     }
 
     public void changeActivity(int pos){

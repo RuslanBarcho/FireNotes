@@ -44,6 +44,9 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
     public void onBindViewHolder(final RecyclerViewHolder holder, final int position) {
         holder.title.setText(noteList.get(position).getTitle());
         holder.text.setText(noteList.get(position).getText());
+        if (noteList.get(position).getTitle().equals("")){
+            holder.title.setVisibility(View.GONE);
+        }
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
