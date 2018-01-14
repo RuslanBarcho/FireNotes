@@ -1,20 +1,17 @@
 package radonsoft.firenotes;
 
-import android.app.DatePickerDialog;
 import android.app.TimePickerDialog;
 import android.arch.persistence.room.Room;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.v4.app.DialogFragment;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.text.format.DateUtils;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.view.View;
-import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.TimePicker;
 import android.widget.Toast;
@@ -34,12 +31,16 @@ public class NoteActivity extends AppCompatActivity implements DateDialogFragmen
     AppDatabase db;
     int noteID;
     public static List<Note> noteList = new ArrayList<Note>();
-    Calendar dateAndTime=Calendar.getInstance();
+    Calendar dateAndTime = Calendar.getInstance();
     DateDialogFragment datedia = new DateDialogFragment();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        if (savedInstanceState != null){
+            dateAndTime = (Calendar) savedInstanceState.getSerializable("CALENDAR_");
+            Log.i("MSG", "DATA RESTORED");
+        }
         setContentView(R.layout.activity_note);
 
         ifEdit = getIntent().getBooleanExtra("editMode", false);
@@ -158,5 +159,12 @@ public class NoteActivity extends AppCompatActivity implements DateDialogFragmen
     public void onYes(){
         dateAndTime = datedia.getDateAndTime();
         dateToast();
+    }
+
+    @Override
+    public void onSaveInstanceState(Bundle outState) {
+        outState.putSerializable("CALENDAR_", dateAndTime);
+        Log.i("MSG", "DATA SAVED");
+        super.onSaveInstanceState(outState);
     }
 }

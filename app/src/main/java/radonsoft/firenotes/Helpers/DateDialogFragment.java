@@ -4,6 +4,7 @@ import android.app.DatePickerDialog;
 import android.app.Dialog;
 import android.app.DialogFragment;
 import android.os.Bundle;
+import android.util.Log;
 import android.widget.DatePicker;
 
 import java.util.Calendar;
@@ -14,6 +15,7 @@ import java.util.Calendar;
 
 public class DateDialogFragment extends DialogFragment {
     public Calendar dateAndTime = Calendar.getInstance();
+    public DatePickerDialog dialog;
 
     public Calendar getDateAndTime() {
         return dateAndTime;
@@ -24,17 +26,24 @@ public class DateDialogFragment extends DialogFragment {
     }
 
     @Override
+    public void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+    }
+
+    @Override
     public Dialog onCreateDialog(Bundle savedInstanceState){
+        if (savedInstanceState != null){
+            dateAndTime = (Calendar) savedInstanceState.getSerializable("CALENDAR_");
+            Log.i("MSG", "DATA RESTORED");
+        }
+
         DatePickerDialog.OnDateSetListener d = new DatePickerDialog.OnDateSetListener() {
             public void onDateSet(DatePicker view, int year, int monthOfYear, int dayOfMonth) {
-                dateAndTime.set(Calendar.YEAR, year);
-                dateAndTime.set(Calendar.MONTH, monthOfYear);
-                dateAndTime.set(Calendar.DAY_OF_MONTH, dayOfMonth);
+                setDate();
                 ((YesNoListener) getActivity()).onYes();
             }
         };
-
-        DatePickerDialog dialog = new DatePickerDialog(getActivity(), d,
+        dialog = new DatePickerDialog(getActivity(), d,
                 dateAndTime.get(Calendar.YEAR),
                 dateAndTime.get(Calendar.MONTH),
                 dateAndTime.get(Calendar.DAY_OF_MONTH));
@@ -42,4 +51,17 @@ public class DateDialogFragment extends DialogFragment {
         return dialog;
     }
 
+    @Override
+    public void onSaveInstanceState(Bundle outState) {
+        setDate();
+        outState.putSerializable("CALENDAR_", dateAndTime);
+        Log.i("MSG", "DATA SAVED");
+        super.onSaveInstanceState(outState);
+    }
+
+    public void setDate(){
+        dateAndTime.set(Calendar.YEAR, dialog.getDatePicker().getYear());
+        dateAndTime.set(Calendar.MONTH, dialog.getDatePicker().getMonth());
+        dateAndTime.set(Calendar.DAY_OF_MONTH, dialog.getDatePicker().getDayOfMonth());
+    }
 }
