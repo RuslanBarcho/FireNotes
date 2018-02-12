@@ -40,8 +40,8 @@ public class NoteFragment extends Fragment {
     public static int position;
     private ActionMode mActionMode;
 
-    public static List<Note> noteList = new ArrayList<Note>();
-    private ArrayList<Integer> toDelete = new ArrayList<Integer>();
+    public static List<Note> noteList = new ArrayList<>();
+    private ArrayList<Integer> toDelete = new ArrayList<>();
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
