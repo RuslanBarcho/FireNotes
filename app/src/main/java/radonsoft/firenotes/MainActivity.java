@@ -18,8 +18,21 @@ import radonsoft.firenotes.Fragments.NoteFragment;
 import radonsoft.firenotes.Fragments.SettingsFragment;
 
 public class MainActivity extends AppCompatActivity {
+    int[][] states = new int[][] {
+            new int[] { android.R.attr.state_enabled}, // enabled
+            new int[] {-android.R.attr.state_enabled}, // disabled
+            new int[] {-android.R.attr.state_checked}, // unchecked
+            new int[] { android.R.attr.state_pressed}  // pressed
+    };
 
+    int[] colors = new int[] {
+            Color.BLACK,
+            Color.BLACK,
+            Color.BLACK,
+            Color.BLACK
+    };
     FragmentTransaction ftrans = getSupportFragmentManager().beginTransaction();
+
     private BottomNavigationView.OnNavigationItemSelectedListener mOnNavigationItemSelectedListener
             = new BottomNavigationView.OnNavigationItemSelectedListener() {
         @Override
@@ -42,19 +55,7 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        int[][] states = new int[][] {
-                new int[] { android.R.attr.state_enabled}, // enabled
-                new int[] {-android.R.attr.state_enabled}, // disabled
-                new int[] {-android.R.attr.state_checked}, // unchecked
-                new int[] { android.R.attr.state_pressed}  // pressed
-        };
 
-        int[] colors = new int[] {
-                Color.BLACK,
-                Color.BLACK,
-                Color.BLACK,
-                Color.BLACK
-        };
 
         ColorStateList myList = new ColorStateList(states, colors);
         BottomNavigationView navigation = findViewById(R.id.navigation);

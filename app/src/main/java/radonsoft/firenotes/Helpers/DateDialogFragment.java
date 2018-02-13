@@ -11,10 +11,6 @@ import android.widget.Toast;
 
 import java.util.Calendar;
 
-/**
- * Created by RRCFo on 04.01.2018.
- */
-
 public class DateDialogFragment extends DialogFragment {
     public Calendar dateAndTime = Calendar.getInstance();
     public DatePickerDialog dialog;
@@ -34,6 +30,8 @@ public class DateDialogFragment extends DialogFragment {
 
     @Override
     public Dialog onCreateDialog(Bundle savedInstanceState){
+        dateAndTime = (Calendar) getArguments().getSerializable("ACTIVITY_CALENDAR");
+
         if (savedInstanceState != null){
             dateAndTime = (Calendar) savedInstanceState.getSerializable("CALENDAR_");
             Log.i("MSG", "DATA RESTORED");
@@ -75,5 +73,4 @@ public class DateDialogFragment extends DialogFragment {
         dateAndTime.set(Calendar.MONTH, dialog.getDatePicker().getMonth());
         dateAndTime.set(Calendar.DAY_OF_MONTH, dialog.getDatePicker().getDayOfMonth());
     }
-
 }

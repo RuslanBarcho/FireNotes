@@ -28,14 +28,11 @@ import radonsoft.firenotes.Models.Note;
 import radonsoft.firenotes.NoteActivity;
 import radonsoft.firenotes.R;
 
-
 public class NoteFragment extends Fragment {
     View mRootView;
     RelativeLayout noNotesScreen;
-
     RecyclerView recyclerView;
     RecyclerViewAdapter adapter;
-
     AppDatabase db;
     Toolbar toolbar;
 
@@ -93,15 +90,16 @@ public class NoteFragment extends Fragment {
             @Override
             public void onClick(int position) {
                 NoteFragment.position = noteList.size() - position;
-                //Toast.makeText(getContext(), "Ты жмакнул на заметку " + position, Toast.LENGTH_SHORT).show();
                 if (mActionMode == null){
                     changeActivity(position);
                 }
                 if (mActionMode != null & !toDelete.contains(position)){
                     toDelete.add(position);
+                    setActionModeTitle();
                 } else {
                     if(toDelete.size()!= 0){
                         toDelete.remove(toDelete.indexOf(position));
+                        setActionModeTitle();
                         if (toDelete.size() == 0){
                             mActionMode.finish();
                         }
@@ -116,9 +114,14 @@ public class NoteFragment extends Fragment {
                 if (mActionMode == null){
                     mActionMode = getActivity().startActionMode(mActionCallback);
                     toDelete.add(position);
+                    setActionModeTitle();
                 }
             }
         });
+    }
+
+    public void setActionModeTitle(){
+        mActionMode.setTitle(String.valueOf(toDelete.size()) + " selected");
     }
 
     public void deleteNotes(){
@@ -142,7 +145,6 @@ public class NoteFragment extends Fragment {
     private ActionMode.Callback mActionCallback = new ActionMode.Callback() {
         @Override
         public boolean onCreateActionMode(ActionMode actionMode, Menu menu) {
-            //Toast.makeText(getContext(), "Ты долго жмакнул на заметку " + position, Toast.LENGTH_SHORT).show();
             MenuInflater inflater = getActivity().getMenuInflater();
             inflater.inflate(R.menu.action_mode_notes, menu);
             return true;
@@ -158,12 +160,10 @@ public class NoteFragment extends Fragment {
             int id = menuItem.getItemId();
             switch (id){
                 case R.id.action_delete:
-                    //Toast.makeText(getContext(), "Нажата кнопка удалить ", Toast.LENGTH_SHORT).show();
                     deleteNotes();
                     mActionMode.finish();
                     break;
                 default:
-
                     break;
             }
             return false;

@@ -83,6 +83,9 @@ public class NoteActivity extends AppCompatActivity implements DateDialogFragmen
         }
 
         if (id == R.id.navbar_schedule) {
+            Bundle args = new Bundle();
+            args.putSerializable("ACTIVITY_CALENDAR", dateAndTime);
+            datedia.setArguments(args);
             datedia.show(getFragmentManager(), "tag");
         }
         return super.onOptionsItemSelected(item);
