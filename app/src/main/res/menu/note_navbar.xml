@@ -3,12 +3,12 @@
     xmlns:app="http://schemas.android.com/apk/res-auto">
     <item
         android:id="@+id/navbar_schedule"
-        android:icon="@drawable/ic_playlist_add_check_white_24dp"
+        android:icon="@drawable/ic_query_builder_black_24dp"
         app:showAsAction="ifRoom"
         android:title="schedule" />
     <item
         android:id="@+id/navbar_done"
-        android:icon="@drawable/ic_done_white_24dp"
-        app:showAsAction="ifRoom"
-        android:title="done" />
+        android:icon="@drawable/ic_done_black_24dp"
+        android:title="done"
+        app:showAsAction="ifRoom" />
 </menu>

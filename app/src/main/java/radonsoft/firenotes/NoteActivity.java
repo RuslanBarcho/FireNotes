@@ -1,11 +1,8 @@
 package radonsoft.firenotes;
 
-import android.app.TimePickerDialog;
 import android.arch.persistence.room.Room;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.text.format.DateUtils;
@@ -13,7 +10,6 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.EditText;
-import android.widget.TimePicker;
 import android.widget.Toast;
 
 import java.util.ArrayList;
@@ -30,8 +26,8 @@ public class NoteActivity extends AppCompatActivity implements DateDialogFragmen
     private boolean ifEdit;
     AppDatabase db;
     int noteID;
-    public static List<Note> noteList = new ArrayList<Note>();
-    Calendar dateAndTime = Calendar.getInstance();
+    public static List<Note> noteList = new ArrayList<>();
+    public Calendar dateAndTime = Calendar.getInstance();
     DateDialogFragment datedia = new DateDialogFragment();
 
     @Override
@@ -81,56 +77,33 @@ public class NoteActivity extends AppCompatActivity implements DateDialogFragmen
         int id = item.getItemId();
         //noinspection SimplifiableIfStatement
         if (id == R.id.navbar_done) {
-            if (ifEdit) {
-                if (!text.getText().toString().equals("")) {
-                    noteList = db.noteDao().getAllNotes();
-                    int pos = noteList.size() - noteID - 1;
-                    Note note = noteList.get(pos);
-                    note.title = title.getText().toString();
-                    note.text = text.getText().toString();
-                    db.noteDao().update(noteList.get(pos));
-                }
-            } else {
-                if (!text.getText().toString().equals("")) {
-                    db.noteDao().insertAll(new Note(title.getText().toString(), text.getText().toString()));
-                }
-            }
+            processNote();
             changeActivity();
             return true;
         }
 
         if (id == R.id.navbar_schedule) {
-            AlertDialog.Builder builder = new AlertDialog.Builder(this );
-            builder.setTitle("Тестовое окно")
-            .setNegativeButton("ОК",
-                    new DialogInterface.OnClickListener() {
-                        public void onClick(DialogInterface dialog, int id) {
-                            dialog.cancel();
-                        }
-                    });
-            AlertDialog alert = builder.create();
-            //alert.show();
             datedia.show(getFragmentManager(), "tag");
-
-
         }
         return super.onOptionsItemSelected(item);
     }
 
-    public void setTime() {
-        new TimePickerDialog(this, t,
-                dateAndTime.get(Calendar.HOUR_OF_DAY),
-                dateAndTime.get(Calendar.MINUTE), true)
-                .show();
-    }
-
-    TimePickerDialog.OnTimeSetListener t=new TimePickerDialog.OnTimeSetListener() {
-        public void onTimeSet(TimePicker view, int hourOfDay, int minute) {
-            dateAndTime.set(Calendar.HOUR_OF_DAY, hourOfDay);
-            dateAndTime.set(Calendar.MINUTE, minute);
-            dateToast();
+    public void processNote(){
+        if (ifEdit) {
+            if (!text.getText().toString().equals("")) {
+                noteList = db.noteDao().getAllNotes();
+                int pos = noteList.size() - noteID - 1;
+                Note note = noteList.get(pos);
+                note.title = title.getText().toString();
+                note.text = text.getText().toString();
+                db.noteDao().update(noteList.get(pos));
+            }
+        } else {
+            if (!text.getText().toString().equals("")) {
+                db.noteDao().insertAll(new Note(title.getText().toString(), text.getText().toString()));
+            }
         }
-    };
+    }
 
     public void dateToast(){
         String date = DateUtils.formatDateTime(this,
@@ -148,15 +121,20 @@ public class NoteActivity extends AppCompatActivity implements DateDialogFragmen
         finish();
     }
 
+    public void setDateAndTime(Calendar dateAndTime) {
+        this.dateAndTime = dateAndTime;
+    }
+
     @Override
     public void onBackPressed() {
+        processNote();
         changeActivity();
         super.onBackPressed();  // optional depending on your needs
     }
 
     @Override
-    public void onYes(){
-        dateAndTime = datedia.getDateAndTime();
+    public void onYes(Calendar time){
+        dateAndTime = time;
         dateToast();
     }
 

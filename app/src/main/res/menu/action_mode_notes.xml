@@ -3,7 +3,9 @@
     xmlns:app="http://schemas.android.com/apk/res-auto">
     <item
         android:id="@+id/action_delete"
-        android:icon="@drawable/ic_delete_white_24dp"
-        app:showAsAction="ifRoom"
-        android:title="delete" />
+        android:icon="@drawable/ic_delete_black_24dp"
+        android:iconTint="@color/colorAccent"
+        android:iconTintMode="src_over"
+        android:title="delete"
+        app:showAsAction="ifRoom" />
 </menu>
