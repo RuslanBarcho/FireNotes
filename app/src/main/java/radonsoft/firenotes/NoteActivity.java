@@ -110,7 +110,6 @@ public class NoteActivity extends AppCompatActivity implements DateDialogFragmen
                     });
             AlertDialog alert = builder.create();
             //alert.show();
-
             datedia.show(getFragmentManager(), "tag");
 
 

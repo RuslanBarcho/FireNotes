@@ -18,11 +18,6 @@ import radonsoft.firenotes.Fragments.SettingsFragment;
 
 public class MainActivity extends AppCompatActivity {
 
-    NoteFragment noteFragment = new NoteFragment();
-    AppDatabase db;
-
-    android.support.v4.app.FragmentTransaction prefsTrans = getSupportFragmentManager().beginTransaction();
-
     FragmentTransaction ftrans = getSupportFragmentManager().beginTransaction();
     private BottomNavigationView.OnNavigationItemSelectedListener mOnNavigationItemSelectedListener
             = new BottomNavigationView.OnNavigationItemSelectedListener() {
@@ -48,13 +43,13 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        BottomNavigationView navigation = (BottomNavigationView) findViewById(R.id.navigation);
+        BottomNavigationView navigation = findViewById(R.id.navigation);
         navigation.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener);
 
-        Toolbar toolbar = (Toolbar) findViewById(R.id.main_toolbar);
+        Toolbar toolbar = findViewById(R.id.main_toolbar);
         setSupportActionBar(toolbar);
 
-        FloatingActionButton floatingActionButton = (FloatingActionButton) findViewById(R.id.floatingActionButton2);
+        FloatingActionButton floatingActionButton = findViewById(R.id.floatingActionButton2);
 
         floatingActionButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -74,7 +69,7 @@ public class MainActivity extends AppCompatActivity {
         }
         String toShowTitle = data.getStringExtra("title");
         String toShowText = data.getStringExtra("title");
-        Toast.makeText(this, toShowTitle, Toast.LENGTH_SHORT).show();
+        //Toast.makeText(this, toShowTitle, Toast.LENGTH_SHORT).show();
     }
 
     public void changeActivity(){

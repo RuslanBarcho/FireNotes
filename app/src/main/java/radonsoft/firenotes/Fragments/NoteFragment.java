@@ -15,6 +15,7 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.RelativeLayout;
 import android.widget.Toast;
 
 import java.util.ArrayList;
@@ -30,6 +31,7 @@ import radonsoft.firenotes.R;
 
 public class NoteFragment extends Fragment {
     View mRootView;
+    RelativeLayout noNotesScreen;
 
     RecyclerView recyclerView;
     RecyclerViewAdapter adapter;
@@ -47,11 +49,13 @@ public class NoteFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         mRootView = inflater.inflate(R.layout.fragment_note, container, false);
-        toolbar = (Toolbar) mRootView.findViewById(R.id.main_toolbar);
+        toolbar = mRootView.findViewById(R.id.main_toolbar);
+        noNotesScreen = mRootView.findViewById(R.id.no_notes_screen);
+        recyclerView = mRootView.findViewById(R.id.recycler);
         getActivity().setTitle("Notes");
         setHasOptionsMenu(true);
-        recyclerView = (RecyclerView) mRootView.findViewById(R.id.recycler);
         initialNotes();
+
         return mRootView;
     }
 
@@ -77,12 +81,19 @@ public class NoteFragment extends Fragment {
         adapter = new RecyclerViewAdapter(noteList);
         recyclerView.setAdapter(adapter);
 
+        //check if any notes are in list
+        if (adapter.getItemCount() == 0){
+            noNotesScreen.setVisibility(View.VISIBLE);
+        } else {
+            noNotesScreen.setVisibility(View.GONE);
+        }
+
         // Set listeners on items by POSITION
         adapter.setItemClickListener(new RecyclerViewAdapter.OnItemClickListener() {
             @Override
             public void onClick(int position) {
                 NoteFragment.position = noteList.size() - position;
-                Toast.makeText(getContext(), "Ты жмакнул на заметку " + position, Toast.LENGTH_SHORT).show();
+                //Toast.makeText(getContext(), "Ты жмакнул на заметку " + position, Toast.LENGTH_SHORT).show();
                 if (mActionMode == null){
                     changeActivity(position);
                 }
@@ -131,7 +142,7 @@ public class NoteFragment extends Fragment {
     private ActionMode.Callback mActionCallback = new ActionMode.Callback() {
         @Override
         public boolean onCreateActionMode(ActionMode actionMode, Menu menu) {
-            Toast.makeText(getContext(), "Ты долго жмакнул на заметку " + position, Toast.LENGTH_SHORT).show();
+            //Toast.makeText(getContext(), "Ты долго жмакнул на заметку " + position, Toast.LENGTH_SHORT).show();
             MenuInflater inflater = getActivity().getMenuInflater();
             inflater.inflate(R.menu.action_mode_notes, menu);
             return true;
@@ -147,7 +158,7 @@ public class NoteFragment extends Fragment {
             int id = menuItem.getItemId();
             switch (id){
                 case R.id.action_delete:
-                    Toast.makeText(getContext(), "Нажата кнопка удалить ", Toast.LENGTH_SHORT).show();
+                    //Toast.makeText(getContext(), "Нажата кнопка удалить ", Toast.LENGTH_SHORT).show();
                     deleteNotes();
                     mActionMode.finish();
                     break;
