@@ -4,20 +4,14 @@ import android.app.DatePickerDialog;
 import android.app.Dialog;
 import android.app.DialogFragment;
 import android.os.Bundle;
-import android.text.format.DateUtils;
 import android.util.Log;
 import android.widget.DatePicker;
-import android.widget.Toast;
 
 import java.util.Calendar;
 
 public class DateDialogFragment extends DialogFragment {
     public Calendar dateAndTime = Calendar.getInstance();
     public DatePickerDialog dialog;
-
-    public Calendar getDateAndTime() {
-        return dateAndTime;
-    }
 
     public interface YesNoListener {
         void onYes(Calendar time);
@@ -35,7 +29,6 @@ public class DateDialogFragment extends DialogFragment {
         if (savedInstanceState != null){
             dateAndTime = (Calendar) savedInstanceState.getSerializable("CALENDAR_");
             Log.i("MSG", "DATA RESTORED");
-            //dateToast();
         }
 
         DatePickerDialog.OnDateSetListener d = new DatePickerDialog.OnDateSetListener() {
@@ -58,14 +51,6 @@ public class DateDialogFragment extends DialogFragment {
         outState.putSerializable("CALENDAR_", dateAndTime);
         Log.i("MSG", "DATA SAVED");
         super.onSaveInstanceState(outState);
-    }
-
-    public void dateToast(){
-        String date = DateUtils.formatDateTime(getContext(),
-                dateAndTime.getTimeInMillis(),
-                DateUtils.FORMAT_SHOW_DATE | DateUtils.FORMAT_SHOW_YEAR
-                        | DateUtils.FORMAT_SHOW_TIME);
-        Toast.makeText(getContext(), date, Toast.LENGTH_SHORT).show();
     }
 
     public void setDate(){

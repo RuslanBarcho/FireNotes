@@ -17,10 +17,8 @@ public class SettingsFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         mRootView = inflater.inflate(R.layout.fragment_settings, container, false);
-        Toolbar toolbar = (Toolbar) mRootView.findViewById(R.id.main_toolbar);
+        Toolbar toolbar = mRootView.findViewById(R.id.main_toolbar);
         getActivity().setTitle("Settings");
         return mRootView;
     }
-
-
 }

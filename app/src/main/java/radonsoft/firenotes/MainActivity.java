@@ -78,6 +78,7 @@ public class MainActivity extends AppCompatActivity {
         ftrans.replace(R.id.content, new NoteFragment());
         ftrans.commit();
     }
+    
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {

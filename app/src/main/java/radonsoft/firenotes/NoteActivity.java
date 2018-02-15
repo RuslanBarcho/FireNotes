@@ -42,10 +42,10 @@ public class NoteActivity extends AppCompatActivity implements DateDialogFragmen
         ifEdit = getIntent().getBooleanExtra("editMode", false);
         noteID = getIntent().getIntExtra("ID", 0);
 
-        title = (EditText) findViewById(R.id.title_edit);
-        text = (EditText) findViewById(R.id.note_edit);
+        title = findViewById(R.id.title_edit);
+        text = findViewById(R.id.note_edit);
 
-        Toolbar toolbar = (Toolbar) findViewById(R.id.note_toolbar);
+        Toolbar toolbar = findViewById(R.id.note_toolbar);
         setSupportActionBar(toolbar);
         getSupportActionBar().setTitle("New note");
 
@@ -122,10 +122,6 @@ public class NoteActivity extends AppCompatActivity implements DateDialogFragmen
         intent.putExtra("text", text.getText().toString());
         setResult(RESULT_OK, intent);
         finish();
-    }
-
-    public void setDateAndTime(Calendar dateAndTime) {
-        this.dateAndTime = dateAndTime;
     }
 
     @Override

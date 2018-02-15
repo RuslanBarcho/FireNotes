@@ -6,6 +6,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
+    android:background="@color/colorPrimary"
     tools:context="radonsoft.firenotes.NoteActivity">
 
     <android.support.v7.widget.Toolbar
@@ -24,31 +25,44 @@
         android:id="@+id/title_edit"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="#E0E0E0"
+        android:background="@color/colorPrimary"
         android:ems="10"
+        android:fontFamily="@font/roboto_mono"
         android:hint="Title"
         android:inputType="textPersonName"
-        android:padding="16dp"
+        android:paddingBottom="16dp"
+        android:paddingLeft="16dp"
+        android:paddingRight="16dp"
+        android:paddingTop="16dp"
         android:textColorLink="@android:color/transparent"
-        android:textSize="22sp"
+        android:textSize="25sp"
         android:textStyle="bold" />
+
+    <View
+        android:id="@+id/UnderLine"
+        android:layout_width="150dp"
+        android:layout_height="1dp"
+        android:layout_marginLeft="16dp"
+        android:background="#000000"
+        android:visibility="gone" />
 
     <EditText
         android:id="@+id/note_edit"
         style="@android:style/Widget.AutoCompleteTextView"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="#EEEEEE"
+        android:background="@color/colorPrimary"
         android:ems="10"
+        android:fontFamily="@font/roboto_mono"
         android:gravity="top"
-        android:hint="Note"
+        android:hint=">"
         android:inputType="textMultiLine"
         android:paddingBottom="16dp"
         android:paddingLeft="16dp"
         android:paddingRight="16dp"
         android:paddingTop="8dp"
         android:singleLine="false"
-        android:textSize="20sp" />
+        android:textSize="22sp" />
 
 
 </LinearLayout>

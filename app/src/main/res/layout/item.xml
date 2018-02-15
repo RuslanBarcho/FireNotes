@@ -30,6 +30,7 @@
             android:text="This is title"
             android:textColor="@android:color/black"
             android:textSize="20sp"
+            android:fontFamily="@font/roboto_mono"
             android:textStyle="bold" />
 
         <TextView
@@ -43,6 +44,7 @@
             android:ellipsize="end"
             android:maxLines="6"
             android:text="This is content text"
+            android:fontFamily="@font/roboto_mono"
             android:textSize="18sp" />
 
     </LinearLayout>
