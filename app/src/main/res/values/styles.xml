@@ -10,8 +10,12 @@
         <item name="android:windowActionModeOverlay">true</item>
         <item name="windowActionModeOverlay">true</item>
         <item name="android:windowLightStatusBar">true</item>
+        <item name="android:fontFamily">@font/roboto_mono</item>
     </style>
 
     <style name="date_picker_theme" parent="@android:style/Widget.DatePicker"> </style>
+    <style name="MonoToolbar" parent="@style/ThemeOverlay.AppCompat.Light">
+        <item name="android:fontFamily">@font/roboto_mono</item>
+    </style>
 
 </resources>

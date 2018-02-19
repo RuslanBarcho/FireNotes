@@ -19,7 +19,7 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:popupTheme="@style/ThemeOverlay.AppCompat.Dark"
-        app:theme="@style/ThemeOverlay.AppCompat.Light" />
+        app:theme="@style/MonoToolbar" />
 
     <EditText
         android:id="@+id/title_edit"
@@ -38,13 +38,35 @@
         android:textSize="25sp"
         android:textStyle="bold" />
 
-    <View
-        android:id="@+id/UnderLine"
-        android:layout_width="150dp"
-        android:layout_height="1dp"
-        android:layout_marginLeft="16dp"
-        android:background="#000000"
-        android:visibility="gone" />
+    <RadioGroup
+        android:id="@+id/check_color"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:gravity="center_horizontal"
+        android:orientation="horizontal">
+
+        <RadioButton
+            android:id="@+id/rb_red"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:paddingRight="10dp"
+            android:text="Red" />
+
+        <RadioButton
+            android:id="@+id/rb_green"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:paddingRight="10dp"
+            android:text="Green" />
+
+        <RadioButton
+            android:id="@+id/rb_blue"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:paddingRight="10dp"
+            android:text="Blue" />
+    </RadioGroup>
 
     <EditText
         android:id="@+id/note_edit"

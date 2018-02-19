@@ -4,8 +4,6 @@
     <item
         android:id="@+id/action_delete"
         android:icon="@drawable/ic_delete_black_24dp"
-        android:iconTint="@color/colorAccent"
-        android:iconTintMode="src_over"
         android:title="delete"
         app:showAsAction="ifRoom" />
 </menu>

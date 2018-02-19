@@ -10,6 +10,7 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.EditText;
+import android.widget.RadioGroup;
 import android.widget.Toast;
 
 import java.util.ArrayList;
@@ -20,15 +21,17 @@ import radonsoft.firenotes.Helpers.DateDialogFragment;
 import radonsoft.firenotes.Models.Note;
 
 public class NoteActivity extends AppCompatActivity implements DateDialogFragment.YesNoListener{
-
     EditText title;
     EditText text;
-    private boolean ifEdit;
     AppDatabase db;
+    RadioGroup checkColor;
+
+    private boolean ifEdit;
     int noteID;
     public static List<Note> noteList = new ArrayList<>();
     public Calendar dateAndTime = Calendar.getInstance();
-    DateDialogFragment datedia = new DateDialogFragment();
+
+    DateDialogFragment dateDialog = new DateDialogFragment();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -44,6 +47,7 @@ public class NoteActivity extends AppCompatActivity implements DateDialogFragmen
 
         title = findViewById(R.id.title_edit);
         text = findViewById(R.id.note_edit);
+        checkColor = findViewById(R.id.check_color);
 
         Toolbar toolbar = findViewById(R.id.note_toolbar);
         setSupportActionBar(toolbar);
@@ -71,12 +75,10 @@ public class NoteActivity extends AppCompatActivity implements DateDialogFragmen
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        // Handle action bar item clicks here. The action bar will
-        // automatically handle clicks on the Home/Up button, so long
-        // as you specify a parent activity in AndroidManifest.xml.
         int id = item.getItemId();
-        //noinspection SimplifiableIfStatement
+
         if (id == R.id.navbar_done) {
+            setColor();
             processNote();
             changeActivity();
             return true;
@@ -85,8 +87,8 @@ public class NoteActivity extends AppCompatActivity implements DateDialogFragmen
         if (id == R.id.navbar_schedule) {
             Bundle args = new Bundle();
             args.putSerializable("ACTIVITY_CALENDAR", dateAndTime);
-            datedia.setArguments(args);
-            datedia.show(getFragmentManager(), "tag");
+            dateDialog.setArguments(args);
+            dateDialog.show(getFragmentManager(), "tag");
         }
         return super.onOptionsItemSelected(item);
     }
@@ -122,6 +124,13 @@ public class NoteActivity extends AppCompatActivity implements DateDialogFragmen
         intent.putExtra("text", text.getText().toString());
         setResult(RESULT_OK, intent);
         finish();
+    }
+
+    public void setColor(){
+        int selectedColor = checkColor.getCheckedRadioButtonId();
+        if (selectedColor == R.id.rb_blue){
+            Toast.makeText(this, "blue", Toast.LENGTH_SHORT).show();
+        }
     }
 
     @Override

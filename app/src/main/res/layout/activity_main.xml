@@ -13,8 +13,9 @@
         android:layout_width="match_parent"
         android:layout_height="?attr/actionBarSize"
         android:background="?attr/colorPrimary"
-        app:theme="@style/ThemeOverlay.AppCompat.Light"
-        app:titleTextColor="@color/colorAccent" />
+        app:theme="@style/MonoToolbar"
+        app:titleTextColor="@color/colorAccent"
+        />
 
     <RelativeLayout
         android:id="@+id/content"
