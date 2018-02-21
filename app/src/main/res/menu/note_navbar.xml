@@ -6,9 +6,10 @@
         android:icon="@drawable/ic_query_builder_black_24dp"
         app:showAsAction="ifRoom"
         android:title="schedule" />
+
     <item
-        android:id="@+id/navbar_done"
-        android:icon="@drawable/ic_done_black_24dp"
-        android:title="done"
+        android:id="@+id/navbar_color"
+        android:icon="@drawable/ic_palette_black_24dp"
+        android:title="color"
         app:showAsAction="ifRoom" />
 </menu>

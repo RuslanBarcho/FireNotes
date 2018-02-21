@@ -9,7 +9,10 @@ import android.text.format.DateUtils;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.SubMenu;
+import android.view.View;
 import android.widget.EditText;
+import android.widget.LinearLayout;
 import android.widget.RadioGroup;
 import android.widget.Toast;
 
@@ -24,7 +27,8 @@ public class NoteActivity extends AppCompatActivity implements DateDialogFragmen
     EditText title;
     EditText text;
     AppDatabase db;
-    RadioGroup checkColor;
+
+    LinearLayout colorPicker;
 
     private boolean ifEdit;
     int noteID;
@@ -47,7 +51,7 @@ public class NoteActivity extends AppCompatActivity implements DateDialogFragmen
 
         title = findViewById(R.id.title_edit);
         text = findViewById(R.id.note_edit);
-        checkColor = findViewById(R.id.check_color);
+        colorPicker = findViewById(R.id.check_color);
 
         Toolbar toolbar = findViewById(R.id.note_toolbar);
         setSupportActionBar(toolbar);
@@ -77,11 +81,17 @@ public class NoteActivity extends AppCompatActivity implements DateDialogFragmen
     public boolean onOptionsItemSelected(MenuItem item) {
         int id = item.getItemId();
 
-        if (id == R.id.navbar_done) {
-            setColor();
-            processNote();
-            changeActivity();
-            return true;
+        //if (id == R.id.navbar_done) {
+        //    processNote();
+        //    changeActivity();
+        //    return true;
+        //}
+        if (id == R.id.navbar_color){
+            if (colorPicker.getVisibility() == View.VISIBLE){
+                colorPicker.setVisibility(View.GONE);
+            } else {
+                colorPicker.setVisibility(View.VISIBLE);
+            }
         }
 
         if (id == R.id.navbar_schedule) {
@@ -124,13 +134,6 @@ public class NoteActivity extends AppCompatActivity implements DateDialogFragmen
         intent.putExtra("text", text.getText().toString());
         setResult(RESULT_OK, intent);
         finish();
-    }
-
-    public void setColor(){
-        int selectedColor = checkColor.getCheckedRadioButtonId();
-        if (selectedColor == R.id.rb_blue){
-            Toast.makeText(this, "blue", Toast.LENGTH_SHORT).show();
-        }
     }
 
     @Override
