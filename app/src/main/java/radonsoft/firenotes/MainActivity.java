@@ -56,7 +56,6 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-
         ColorStateList myList = new ColorStateList(states, colors);
         BottomNavigationView navigation = findViewById(R.id.navigation);
         navigation.setItemIconTintList(myList);
@@ -78,7 +77,7 @@ public class MainActivity extends AppCompatActivity {
         ftrans.replace(R.id.content, new NoteFragment());
         ftrans.commit();
     }
-    
+
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {

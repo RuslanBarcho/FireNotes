@@ -9,11 +9,9 @@ import android.text.format.DateUtils;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.view.SubMenu;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.LinearLayout;
-import android.widget.RadioGroup;
 import android.widget.Toast;
 
 import java.util.ArrayList;
@@ -29,6 +27,7 @@ public class NoteActivity extends AppCompatActivity implements DateDialogFragmen
     AppDatabase db;
 
     LinearLayout colorPicker;
+    LinearLayout colorPickerBackground;
 
     private boolean ifEdit;
     int noteID;
@@ -52,10 +51,21 @@ public class NoteActivity extends AppCompatActivity implements DateDialogFragmen
         title = findViewById(R.id.title_edit);
         text = findViewById(R.id.note_edit);
         colorPicker = findViewById(R.id.check_color);
+        colorPickerBackground = findViewById(R.id.check_color_background);
 
         Toolbar toolbar = findViewById(R.id.note_toolbar);
         setSupportActionBar(toolbar);
         getSupportActionBar().setTitle("New note");
+
+        colorPickerBackground.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if (colorPicker.getVisibility() == View.VISIBLE){
+                    colorPicker.setVisibility(View.GONE);
+                    colorPickerBackground.setVisibility(View.GONE);
+                }
+            }
+        });
 
         db = Room.databaseBuilder(getApplicationContext(), AppDatabase.class, "production")
                 .allowMainThreadQueries()
@@ -89,8 +99,10 @@ public class NoteActivity extends AppCompatActivity implements DateDialogFragmen
         if (id == R.id.navbar_color){
             if (colorPicker.getVisibility() == View.VISIBLE){
                 colorPicker.setVisibility(View.GONE);
+                colorPickerBackground.setVisibility(View.GONE);
             } else {
                 colorPicker.setVisibility(View.VISIBLE);
+                colorPickerBackground.setVisibility(View.VISIBLE);
             }
         }
 
@@ -138,9 +150,15 @@ public class NoteActivity extends AppCompatActivity implements DateDialogFragmen
 
     @Override
     public void onBackPressed() {
-        processNote();
-        changeActivity();
-        super.onBackPressed();  // optional depending on your needs
+        if (colorPicker.getVisibility() == View.VISIBLE){
+            colorPicker.setVisibility(View.GONE);
+            colorPickerBackground.setVisibility(View.GONE);
+        } else{
+            processNote();
+            changeActivity();
+            super.onBackPressed();
+        }
+         // optional depending on your needs
     }
 
     @Override
