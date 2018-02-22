@@ -12,6 +12,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.LinearLayout;
+import android.widget.RadioGroup;
 import android.widget.Toast;
 
 import java.util.ArrayList;
@@ -26,7 +27,7 @@ public class NoteActivity extends AppCompatActivity implements DateDialogFragmen
     EditText text;
     AppDatabase db;
 
-    LinearLayout colorPicker;
+    LinearLayout colorPickerLayout;
     LinearLayout colorPickerBackground;
 
     private boolean ifEdit;
@@ -35,6 +36,7 @@ public class NoteActivity extends AppCompatActivity implements DateDialogFragmen
     public Calendar dateAndTime = Calendar.getInstance();
 
     DateDialogFragment dateDialog = new DateDialogFragment();
+    RadioGroup colorPicker;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -50,8 +52,9 @@ public class NoteActivity extends AppCompatActivity implements DateDialogFragmen
 
         title = findViewById(R.id.title_edit);
         text = findViewById(R.id.note_edit);
-        colorPicker = findViewById(R.id.check_color);
+        colorPickerLayout = findViewById(R.id.check_colorLayout);
         colorPickerBackground = findViewById(R.id.check_color_background);
+        colorPicker = findViewById(R.id.check_color);
 
         Toolbar toolbar = findViewById(R.id.note_toolbar);
         setSupportActionBar(toolbar);
@@ -60,9 +63,21 @@ public class NoteActivity extends AppCompatActivity implements DateDialogFragmen
         colorPickerBackground.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if (colorPicker.getVisibility() == View.VISIBLE){
-                    colorPicker.setVisibility(View.GONE);
+                if (colorPickerLayout.getVisibility() == View.VISIBLE){
+                    colorPickerLayout.setVisibility(View.GONE);
                     colorPickerBackground.setVisibility(View.GONE);
+                }
+            }
+        });
+        colorPicker.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener()
+        {
+            @Override
+            public void onCheckedChanged(RadioGroup group, int checkedId) {
+                switch (checkedId){
+                    case (R.id.rb_red):{
+                        Toast.makeText(NoteActivity.this, "RED", Toast.LENGTH_SHORT).show();
+                    }
+                    break;
                 }
             }
         });
@@ -90,18 +105,17 @@ public class NoteActivity extends AppCompatActivity implements DateDialogFragmen
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         int id = item.getItemId();
-
         //if (id == R.id.navbar_done) {
         //    processNote();
         //    changeActivity();
         //    return true;
         //}
         if (id == R.id.navbar_color){
-            if (colorPicker.getVisibility() == View.VISIBLE){
-                colorPicker.setVisibility(View.GONE);
+            if (colorPickerLayout.getVisibility() == View.VISIBLE){
+                colorPickerLayout.setVisibility(View.GONE);
                 colorPickerBackground.setVisibility(View.GONE);
             } else {
-                colorPicker.setVisibility(View.VISIBLE);
+                colorPickerLayout.setVisibility(View.VISIBLE);
                 colorPickerBackground.setVisibility(View.VISIBLE);
             }
         }
@@ -150,8 +164,8 @@ public class NoteActivity extends AppCompatActivity implements DateDialogFragmen
 
     @Override
     public void onBackPressed() {
-        if (colorPicker.getVisibility() == View.VISIBLE){
-            colorPicker.setVisibility(View.GONE);
+        if (colorPickerLayout.getVisibility() == View.VISIBLE){
+            colorPickerLayout.setVisibility(View.GONE);
             colorPickerBackground.setVisibility(View.GONE);
         } else{
             processNote();
