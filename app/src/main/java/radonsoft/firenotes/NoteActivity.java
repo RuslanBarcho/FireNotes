@@ -74,7 +74,7 @@ public class NoteActivity extends AppCompatActivity implements DateDialogFragmen
             @Override
             public void onClick(View view) {
                 if (colorPickerLayout.getVisibility() == View.VISIBLE){
-                    hideColorPicher();
+                    hideColorPicker();
                 }
             }
         });
@@ -117,7 +117,7 @@ public class NoteActivity extends AppCompatActivity implements DateDialogFragmen
         int id = item.getItemId();
         if (id == R.id.navbar_color){
             if (colorPickerLayout.getVisibility() == View.VISIBLE){
-                hideColorPicher();
+                hideColorPicker();
             } else {
                 showColorPicker();
             }
@@ -142,7 +142,7 @@ public class NoteActivity extends AppCompatActivity implements DateDialogFragmen
             default: return Color.parseColor("#ffffff");
         }
     }
-    private void hideColorPicher(){
+    private void hideColorPicker(){
         colorPickerLayout.startAnimation(slideUp);
         colorPicker.setVisibility(View.GONE);
         colorPickerLayout.setVisibility(View.GONE);
@@ -199,9 +199,7 @@ public class NoteActivity extends AppCompatActivity implements DateDialogFragmen
     @Override
     public void onBackPressed() {
         if (colorPickerLayout.getVisibility() == View.VISIBLE){
-            colorPickerLayout.startAnimation(slideUp);
-            colorPickerLayout.setVisibility(View.GONE);
-            colorPickerBackground.setVisibility(View.GONE);
+            hideColorPicker();
         } else{
             processNote();
             changeActivity();
