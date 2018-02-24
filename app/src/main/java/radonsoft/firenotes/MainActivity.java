@@ -18,6 +18,7 @@ import radonsoft.firenotes.Fragments.NoteFragment;
 import radonsoft.firenotes.Fragments.SettingsFragment;
 
 public class MainActivity extends AppCompatActivity {
+
     int[][] states = new int[][] {
             new int[] { android.R.attr.state_enabled}, // enabled
             new int[] {-android.R.attr.state_enabled}, // disabled
@@ -78,14 +79,13 @@ public class MainActivity extends AppCompatActivity {
         ftrans.commit();
     }
 
-
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        if (data == null) {
-            return;
-        }
-        String toShowTitle = data.getStringExtra("title");
-        String toShowText = data.getStringExtra("title");
+        //if (data == null) {
+            //return;
+        //}
+        //String toShowTitle = data.getStringExtra("title");
+        //String toShowText = data.getStringExtra("title");
         //Toast.makeText(this, toShowTitle, Toast.LENGTH_SHORT).show();
     }
 

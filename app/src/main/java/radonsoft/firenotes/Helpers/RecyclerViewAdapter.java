@@ -45,7 +45,7 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
     public void onBindViewHolder(final RecyclerViewHolder holder, final int position) {
         holder.title.setText(noteList.get(position).getTitle());
         holder.text.setText(noteList.get(position).getText());
-        holder.background.setBackgroundColor(getColor(noteList.get(position).color));
+        holder.background.setBackgroundColor(parseColor(noteList.get(position).color));
 
         if (noteList.get(position).getTitle().equals("")){
             holder.title.setVisibility(View.GONE);
@@ -81,21 +81,23 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
         });
     }
 
+    private int parseColor(int color_id){
+        switch (color_id){
+            case (R.id.rb_red): return Color.parseColor("#F77272");
+            case (R.id.rb_green): return Color.parseColor("#A8FA9B");
+            case (R.id.rb_blue): return Color.parseColor("#7C8FF7");
+            case (R.id.rb_yellow): return Color.parseColor("#F7E272");
+            case (R.id.rb_violet): return Color.parseColor("#D086E3");
+            default: return Color.parseColor("#ffffff");
+        }
+    }
+
     public void setItemClickListener(OnItemClickListener itemClickListener) {
                 this.itemClickListener = itemClickListener;
     }
 
     public void setItemLongClickListener(OnItemClickListener itemLongClickListener){
                 this.itemLongClickListener = itemLongClickListener;
-    }
-
-    private int getColor(int color_id){
-        switch (color_id){
-            case (R.id.rb_red): return Color.parseColor("#F77272");
-            case (R.id.rb_green): return Color.parseColor("#A8FA9B");
-            case (R.id.rb_blue): return Color.parseColor("#7C8FF7");
-            default: return Color.parseColor("#ffffff");
-        }
     }
 
     @Override

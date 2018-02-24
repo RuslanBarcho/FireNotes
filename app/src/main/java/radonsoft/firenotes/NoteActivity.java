@@ -2,6 +2,8 @@ package radonsoft.firenotes;
 
 import android.arch.persistence.room.Room;
 import android.content.Intent;
+import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
@@ -10,6 +12,7 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.Window;
 import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.RadioGroup;
@@ -29,6 +32,7 @@ public class NoteActivity extends AppCompatActivity implements DateDialogFragmen
 
     LinearLayout colorPickerLayout;
     LinearLayout colorPickerBackground;
+    Toolbar toolbar;
 
     private boolean ifEdit;
     int noteID;
@@ -53,11 +57,12 @@ public class NoteActivity extends AppCompatActivity implements DateDialogFragmen
 
         title = findViewById(R.id.title_edit);
         text = findViewById(R.id.note_edit);
+
         colorPickerLayout = findViewById(R.id.check_colorLayout);
         colorPickerBackground = findViewById(R.id.check_color_background);
         colorPicker = findViewById(R.id.check_color);
 
-        Toolbar toolbar = findViewById(R.id.note_toolbar);
+        toolbar = findViewById(R.id.note_toolbar);
         setSupportActionBar(toolbar);
         getSupportActionBar().setTitle("New note");
 
@@ -70,13 +75,14 @@ public class NoteActivity extends AppCompatActivity implements DateDialogFragmen
                 }
             }
         });
-        colorPicker.check(R.id.rb_white);
 
+        colorPicker.check(R.id.rb_white);
         colorPicker.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener()
         {
             @Override
             public void onCheckedChanged(RadioGroup group, int checkedId) {
                 color = checkedId;
+                setColor(parseColor(color));
             }
         });
 
@@ -92,6 +98,7 @@ public class NoteActivity extends AppCompatActivity implements DateDialogFragmen
             text.setText(note.text);
             colorPicker.check(note.color);
         }
+        setColor(parseColor(colorPicker.getCheckedRadioButtonId()));
     }
 
     @Override
@@ -123,6 +130,25 @@ public class NoteActivity extends AppCompatActivity implements DateDialogFragmen
         return super.onOptionsItemSelected(item);
     }
 
+    private int parseColor(int color_id){
+        switch (color_id){
+            case (R.id.rb_red): return Color.parseColor("#F77272");
+            case (R.id.rb_green): return Color.parseColor("#A8FA9B");
+            case (R.id.rb_blue): return Color.parseColor("#7C8FF7");
+            case (R.id.rb_yellow): return Color.parseColor("#F7E272");
+            case (R.id.rb_violet): return Color.parseColor("#D086E3");
+            default: return Color.parseColor("#ffffff");
+        }
+    }
+
+    private void setColor(int color){
+        Window window = getWindow();
+        window.setStatusBarColor(color);
+        getSupportActionBar().setBackgroundDrawable(new ColorDrawable(color));
+        text.setBackgroundColor(color);
+        title.setBackgroundColor(color);
+    }
+
     public void processNote(){
         if (ifEdit) {
             if (!text.getText().toString().equals("")) {
@@ -151,8 +177,6 @@ public class NoteActivity extends AppCompatActivity implements DateDialogFragmen
 
     public void changeActivity() {
         Intent intent = new Intent();
-        intent.putExtra("title", title.getText().toString());
-        intent.putExtra("text", text.getText().toString());
         setResult(RESULT_OK, intent);
         finish();
     }
@@ -167,7 +191,6 @@ public class NoteActivity extends AppCompatActivity implements DateDialogFragmen
             changeActivity();
             super.onBackPressed();
         }
-         // optional depending on your needs
     }
 
     @Override
