@@ -74,9 +74,7 @@ public class NoteActivity extends AppCompatActivity implements DateDialogFragmen
             @Override
             public void onClick(View view) {
                 if (colorPickerLayout.getVisibility() == View.VISIBLE){
-                    colorPickerLayout.startAnimation(slideUp);
-                    colorPickerLayout.setVisibility(View.GONE);
-                    colorPickerBackground.setVisibility(View.GONE);
+                    hideColorPicher();
                 }
             }
         });
@@ -119,13 +117,9 @@ public class NoteActivity extends AppCompatActivity implements DateDialogFragmen
         int id = item.getItemId();
         if (id == R.id.navbar_color){
             if (colorPickerLayout.getVisibility() == View.VISIBLE){
-                colorPickerLayout.startAnimation(slideUp);
-                colorPickerLayout.setVisibility(View.GONE);
-                colorPickerBackground.setVisibility(View.GONE);
+                hideColorPicher();
             } else {
-                colorPickerLayout.startAnimation(slideDown);
-                colorPickerLayout.setVisibility(View.VISIBLE);
-                colorPickerBackground.setVisibility(View.VISIBLE);
+                showColorPicker();
             }
         }
 
@@ -147,6 +141,19 @@ public class NoteActivity extends AppCompatActivity implements DateDialogFragmen
             case (R.id.rb_violet): return Color.parseColor("#D086E3");
             default: return Color.parseColor("#ffffff");
         }
+    }
+    private void hideColorPicher(){
+        colorPickerLayout.startAnimation(slideUp);
+        colorPicker.setVisibility(View.GONE);
+        colorPickerLayout.setVisibility(View.GONE);
+        colorPickerBackground.setVisibility(View.GONE);
+    }
+
+    private void showColorPicker(){
+        colorPickerLayout.startAnimation(slideDown);
+        colorPicker.setVisibility(View.VISIBLE);
+        colorPickerLayout.setVisibility(View.VISIBLE);
+        colorPickerBackground.setVisibility(View.VISIBLE);
     }
 
     private void setColor(int color){
