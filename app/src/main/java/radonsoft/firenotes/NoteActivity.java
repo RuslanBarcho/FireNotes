@@ -13,6 +13,8 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.Window;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
 import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.RadioGroup;
@@ -34,14 +36,16 @@ public class NoteActivity extends AppCompatActivity implements DateDialogFragmen
     LinearLayout colorPickerBackground;
     Toolbar toolbar;
 
-    private boolean ifEdit;
     int noteID;
     int color;
+    private boolean ifEdit;
     public static List<Note> noteList = new ArrayList<>();
     public Calendar dateAndTime = Calendar.getInstance();
 
     DateDialogFragment dateDialog = new DateDialogFragment();
     RadioGroup colorPicker;
+    Animation slideUp;
+    Animation slideDown;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -70,12 +74,12 @@ public class NoteActivity extends AppCompatActivity implements DateDialogFragmen
             @Override
             public void onClick(View view) {
                 if (colorPickerLayout.getVisibility() == View.VISIBLE){
+                    colorPickerLayout.startAnimation(slideUp);
                     colorPickerLayout.setVisibility(View.GONE);
                     colorPickerBackground.setVisibility(View.GONE);
                 }
             }
         });
-
         colorPicker.check(R.id.rb_white);
         colorPicker.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener()
         {
@@ -98,6 +102,8 @@ public class NoteActivity extends AppCompatActivity implements DateDialogFragmen
             text.setText(note.text);
             colorPicker.check(note.color);
         }
+        slideUp = AnimationUtils.loadAnimation(this, R.anim.side_up);
+        slideDown = AnimationUtils.loadAnimation(this, R.anim.side_down);
         setColor(parseColor(colorPicker.getCheckedRadioButtonId()));
     }
 
@@ -113,9 +119,11 @@ public class NoteActivity extends AppCompatActivity implements DateDialogFragmen
         int id = item.getItemId();
         if (id == R.id.navbar_color){
             if (colorPickerLayout.getVisibility() == View.VISIBLE){
+                colorPickerLayout.startAnimation(slideUp);
                 colorPickerLayout.setVisibility(View.GONE);
                 colorPickerBackground.setVisibility(View.GONE);
             } else {
+                colorPickerLayout.startAnimation(slideDown);
                 colorPickerLayout.setVisibility(View.VISIBLE);
                 colorPickerBackground.setVisibility(View.VISIBLE);
             }
@@ -184,6 +192,7 @@ public class NoteActivity extends AppCompatActivity implements DateDialogFragmen
     @Override
     public void onBackPressed() {
         if (colorPickerLayout.getVisibility() == View.VISIBLE){
+            colorPickerLayout.startAnimation(slideUp);
             colorPickerLayout.setVisibility(View.GONE);
             colorPickerBackground.setVisibility(View.GONE);
         } else{

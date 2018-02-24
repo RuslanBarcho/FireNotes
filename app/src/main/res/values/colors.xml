@@ -4,5 +4,5 @@
     <color name="colorPrimaryDark">#F7F7F7</color>
     <color name="colorAccent">#000000</color>
     <color name="colorAction">#000000</color>
-
+    <color name="colorPickerBackground">#c0ffffff</color>
 </resources>
