@@ -10,12 +10,14 @@
     android:clickable="true"
     android:foreground="?android:attr/selectableItemBackground"
     android:orientation="vertical"
-    app:cardCornerRadius="2dp">
+    app:cardCornerRadius="0dp">
 
     <LinearLayout
         android:id="@+id/item_background"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:backgroundTint="#ffffff"
+        android:backgroundTintMode="multiply"
         android:clickable="false"
         android:orientation="vertical">
 
@@ -42,9 +44,9 @@
             android:layout_marginRight="16dp"
             android:layout_marginTop="8dp"
             android:ellipsize="end"
+            android:fontFamily="@font/roboto_mono"
             android:maxLines="6"
             android:text="This is content text"
-            android:fontFamily="@font/roboto_mono"
             android:textSize="18sp" />
 
     </LinearLayout>

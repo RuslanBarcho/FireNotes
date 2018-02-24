@@ -32,6 +32,7 @@ public class NoteActivity extends AppCompatActivity implements DateDialogFragmen
 
     private boolean ifEdit;
     int noteID;
+    int color;
     public static List<Note> noteList = new ArrayList<>();
     public Calendar dateAndTime = Calendar.getInstance();
 
@@ -69,16 +70,13 @@ public class NoteActivity extends AppCompatActivity implements DateDialogFragmen
                 }
             }
         });
+        colorPicker.check(R.id.rb_white);
+
         colorPicker.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener()
         {
             @Override
             public void onCheckedChanged(RadioGroup group, int checkedId) {
-                switch (checkedId){
-                    case (R.id.rb_red):{
-                        Toast.makeText(NoteActivity.this, "RED", Toast.LENGTH_SHORT).show();
-                    }
-                    break;
-                }
+                color = checkedId;
             }
         });
 
@@ -92,6 +90,7 @@ public class NoteActivity extends AppCompatActivity implements DateDialogFragmen
             Note note = noteList.get(pos);
             title.setText(note.title);
             text.setText(note.text);
+            colorPicker.check(note.color);
         }
     }
 
@@ -105,11 +104,6 @@ public class NoteActivity extends AppCompatActivity implements DateDialogFragmen
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         int id = item.getItemId();
-        //if (id == R.id.navbar_done) {
-        //    processNote();
-        //    changeActivity();
-        //    return true;
-        //}
         if (id == R.id.navbar_color){
             if (colorPickerLayout.getVisibility() == View.VISIBLE){
                 colorPickerLayout.setVisibility(View.GONE);
@@ -137,11 +131,12 @@ public class NoteActivity extends AppCompatActivity implements DateDialogFragmen
                 Note note = noteList.get(pos);
                 note.title = title.getText().toString();
                 note.text = text.getText().toString();
+                note.color = color;
                 db.noteDao().update(noteList.get(pos));
             }
         } else {
             if (!text.getText().toString().equals("")) {
-                db.noteDao().insertAll(new Note(title.getText().toString(), text.getText().toString()));
+                db.noteDao().insertAll(new Note(title.getText().toString(), text.getText().toString(), color));
             }
         }
     }

@@ -17,14 +17,17 @@ public class Note {
     public String title;
     @ColumnInfo(name = "text")
     public String text;
+    @ColumnInfo(name = "color")
+    public int color;
 
     public Note(){
 
     }
 
-    public Note(String title, String text){
+    public Note(String title, String text, int color){
         this.title = title;
         this.text = text;
+        this.color = color;
     }
     public int getId(){
         return id;
@@ -48,5 +51,13 @@ public class Note {
 
     public void setText(String text) {
         this.text = text;
+    }
+
+    public int getColor() {
+        return color;
+    }
+
+    public void setColor(int color) {
+        this.color = color;
     }
 }

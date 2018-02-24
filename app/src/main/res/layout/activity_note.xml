@@ -142,6 +142,16 @@
                 android:layout_marginTop="8dp"
                 android:button="@drawable/circle_button_selector"
                 android:buttonTint="#D086E3" />
+            <RadioButton
+                android:id="@+id/rb_white"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="8dp"
+                android:layout_marginLeft="10dp"
+                android:layout_marginRight="10dp"
+                android:layout_marginTop="8dp"
+                android:button="@drawable/circle_button_selector"
+                android:buttonTint="@color/colorPrimary" />
         </RadioGroup>
     </LinearLayout>
 
