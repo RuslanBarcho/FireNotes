@@ -93,8 +93,7 @@ public class NoteActivity extends AppCompatActivity implements DateDialogFragmen
 
         if (ifEdit){
             noteList = db.noteDao().getAllNotes();
-            int pos = noteList.size() - noteID - 1;
-            Note note = noteList.get(pos);
+            Note note = noteList.get(noteList.size() - noteID - 1);
             title.setText(note.title);
             text.setText(note.text);
             colorPicker.check(note.color);
@@ -165,12 +164,11 @@ public class NoteActivity extends AppCompatActivity implements DateDialogFragmen
         if (ifEdit) {
             if (!text.getText().toString().equals("")) {
                 noteList = db.noteDao().getAllNotes();
-                int pos = noteList.size() - noteID - 1;
-                Note note = noteList.get(pos);
+                Note note = noteList.get(noteList.size() - noteID - 1);
                 note.title = title.getText().toString();
                 note.text = text.getText().toString();
                 note.color = color;
-                db.noteDao().update(noteList.get(pos));
+                db.noteDao().update(noteList.get(noteList.size() - noteID - 1));
             }
         } else {
             if (!text.getText().toString().equals("")) {
