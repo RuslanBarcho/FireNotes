@@ -12,7 +12,6 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.view.Window;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.widget.EditText;
@@ -28,35 +27,35 @@ import radonsoft.firenotes.Helpers.DateDialogFragment;
 import radonsoft.firenotes.Models.Note;
 
 public class NoteActivity extends AppCompatActivity implements DateDialogFragment.YesNoListener{
+
     EditText title;
     EditText text;
     AppDatabase db;
-
     LinearLayout colorPickerBackground;
     Toolbar toolbar;
-
-    int noteID;
-    int color;
-    private boolean ifEdit;
-    public static List<Note> noteList = new ArrayList<>();
-    public Calendar dateAndTime = Calendar.getInstance();
-
-    DateDialogFragment dateDialog = new DateDialogFragment();
     RadioGroup colorPicker;
     Animation slideUp;
     Animation slideDown;
+    int noteID;
+    int color;
+    private boolean ifEdit;
+    public List<Note> noteList = new ArrayList<>();
+    public Calendar dateAndTime = Calendar.getInstance();
+    DateDialogFragment dateDialog = new DateDialogFragment();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         if (savedInstanceState != null){
             dateAndTime = (Calendar) savedInstanceState.getSerializable("CALENDAR_");
-            Log.i("MSG", "DATA RESTORED");
         }
         setContentView(R.layout.activity_note);
 
         ifEdit = getIntent().getBooleanExtra("editMode", false);
         noteID = getIntent().getIntExtra("ID", 0);
+
+        slideUp = AnimationUtils.loadAnimation(this, R.anim.side_up);
+        slideDown = AnimationUtils.loadAnimation(this, R.anim.side_down);
 
         title = findViewById(R.id.title_edit);
         text = findViewById(R.id.note_edit);
@@ -73,7 +72,7 @@ public class NoteActivity extends AppCompatActivity implements DateDialogFragmen
             @Override
             public void onClick(View view) {
                 if (colorPicker.getVisibility() == View.VISIBLE){
-                    hideColorPicker();
+                    setColorPickerVisibility(View.GONE, slideUp);
                 }
             }
         });
@@ -98,8 +97,6 @@ public class NoteActivity extends AppCompatActivity implements DateDialogFragmen
             text.setText(note.text);
             colorPicker.check(note.color);
         }
-        slideUp = AnimationUtils.loadAnimation(this, R.anim.side_up);
-        slideDown = AnimationUtils.loadAnimation(this, R.anim.side_down);
         setColor(parseColor(colorPicker.getCheckedRadioButtonId()));
     }
 
@@ -115,9 +112,9 @@ public class NoteActivity extends AppCompatActivity implements DateDialogFragmen
         int id = item.getItemId();
         if (id == R.id.navbar_color){
             if (colorPicker.getVisibility() == View.VISIBLE){
-                hideColorPicker();
+                setColorPickerVisibility(View.GONE, slideUp);
             } else {
-                showColorPicker();
+                setColorPickerVisibility(View.VISIBLE, slideDown);
             }
         }
 
@@ -140,38 +137,30 @@ public class NoteActivity extends AppCompatActivity implements DateDialogFragmen
             default: return Color.parseColor("#ffffff");
         }
     }
-    private void hideColorPicker(){
-        colorPicker.startAnimation(slideUp);
-        colorPicker.setVisibility(View.GONE);
-        colorPickerBackground.setVisibility(View.GONE);
-    }
 
-    private void showColorPicker(){
-        colorPicker.startAnimation(slideDown);
-        colorPicker.setVisibility(View.VISIBLE);
-        colorPickerBackground.setVisibility(View.VISIBLE);
+    private void setColorPickerVisibility(int visibility, Animation animation){
+        colorPicker.startAnimation(animation);
+        colorPicker.setVisibility(visibility);
+        colorPickerBackground.setVisibility(visibility);
     }
 
     private void setColor(int color){
-        Window window = getWindow();
-        window.setStatusBarColor(color);
+        getWindow().setStatusBarColor(color);
         getSupportActionBar().setBackgroundDrawable(new ColorDrawable(color));
         text.setBackgroundColor(color);
         title.setBackgroundColor(color);
     }
 
     public void processNote(){
-        if (ifEdit) {
-            if (!text.getText().toString().equals("")) {
+        if (!text.getText().toString().equals("")) {
+            if (ifEdit) {
                 noteList = db.noteDao().getAllNotes();
                 Note note = noteList.get(noteList.size() - noteID - 1);
                 note.title = title.getText().toString();
                 note.text = text.getText().toString();
                 note.color = color;
                 db.noteDao().update(noteList.get(noteList.size() - noteID - 1));
-            }
-        } else {
-            if (!text.getText().toString().equals("")) {
+            } else {
                 db.noteDao().insertAll(new Note(title.getText().toString(), text.getText().toString(), color));
             }
         }
@@ -194,7 +183,7 @@ public class NoteActivity extends AppCompatActivity implements DateDialogFragmen
     @Override
     public void onBackPressed() {
         if (colorPicker.getVisibility() == View.VISIBLE){
-            hideColorPicker();
+            setColorPickerVisibility(View.GONE, slideUp);
         } else{
             processNote();
             changeActivity();
@@ -211,7 +200,6 @@ public class NoteActivity extends AppCompatActivity implements DateDialogFragmen
     @Override
     public void onSaveInstanceState(Bundle outState) {
         outState.putSerializable("CALENDAR_", dateAndTime);
-        Log.i("MSG", "DATA SAVED");
         super.onSaveInstanceState(outState);
     }
 }
