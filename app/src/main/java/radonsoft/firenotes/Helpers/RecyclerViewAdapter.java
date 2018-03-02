@@ -64,7 +64,6 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
                         selectedItems.add(position);
                     }
                 }
-                // NoteFragment.position = getAdapterPosition();
             }
         });
         holder.itemView.setOnLongClickListener(new View.OnLongClickListener() {

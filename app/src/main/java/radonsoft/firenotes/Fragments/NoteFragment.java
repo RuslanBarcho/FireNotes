@@ -8,6 +8,7 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.StaggeredGridLayoutManager;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.ActionMode;
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -16,7 +17,6 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.RelativeLayout;
-import android.widget.Toast;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -24,11 +24,12 @@ import java.util.List;
 
 import radonsoft.firenotes.AppDatabase;
 import radonsoft.firenotes.Helpers.RecyclerViewAdapter;
+import radonsoft.firenotes.MainActivity;
 import radonsoft.firenotes.Models.Note;
 import radonsoft.firenotes.NoteActivity;
 import radonsoft.firenotes.R;
 
-public class NoteFragment extends Fragment {
+public class NoteFragment extends Fragment implements MainActivity.FragmentLifecycle {
     View mRootView;
     RelativeLayout noNotesScreen;
     RecyclerView recyclerView;
@@ -36,10 +37,9 @@ public class NoteFragment extends Fragment {
     AppDatabase db;
     Toolbar toolbar;
 
-    public static int position;
     private ActionMode mActionMode;
 
-    public static List<Note> noteList = new ArrayList<>();
+    public List<Note> noteList = new ArrayList<>();
     private ArrayList<Integer> toDelete = new ArrayList<>();
 
     @Override
@@ -49,10 +49,10 @@ public class NoteFragment extends Fragment {
         toolbar = mRootView.findViewById(R.id.main_toolbar);
         noNotesScreen = mRootView.findViewById(R.id.no_notes_screen);
         recyclerView = mRootView.findViewById(R.id.recycler);
-        getActivity().setTitle("Notes");
+        //getActivity().setTitle("Notes");
         setHasOptionsMenu(true);
         initialNotes();
-
+        Log.d("On create ", "Notes");
         return mRootView;
     }
 
@@ -89,7 +89,6 @@ public class NoteFragment extends Fragment {
         adapter.setItemClickListener(new RecyclerViewAdapter.OnItemClickListener() {
             @Override
             public void onClick(int position) {
-                NoteFragment.position = noteList.size() - position;
                 if (mActionMode == null){
                     changeActivity(position);
                 }
@@ -101,6 +100,7 @@ public class NoteFragment extends Fragment {
                         toDelete.remove(toDelete.indexOf(position));
                         setActionModeTitle();
                         if (toDelete.size() == 0){
+                            mActionMode.setTitle("");
                             mActionMode.finish();
                         }
                     }
@@ -110,7 +110,6 @@ public class NoteFragment extends Fragment {
         adapter.setItemLongClickListener(new RecyclerViewAdapter.OnItemClickListener() {
             @Override
             public void onClick(int position) {
-                NoteFragment.position = position;
                 if (mActionMode == null){
                     mActionMode = getActivity().startActionMode(mActionCallback);
                     toDelete.add(position);
@@ -184,10 +183,12 @@ public class NoteFragment extends Fragment {
     }
 
     @Override
-    public void onPause() {
-        if (mActionMode != null){
-            mActionMode.finish();
-        }
-        super.onPause();
+    public void onPauseFragment() {
+        if (mActionMode != null) mActionMode.finish();
+    }
+
+    @Override
+    public void onResumeFragment() {
+
     }
 }

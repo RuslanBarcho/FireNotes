@@ -14,7 +14,7 @@ public class DateDialogFragment extends DialogFragment {
     public DatePickerDialog dialog;
 
     public interface YesNoListener {
-        void onYes(Calendar time);
+        void onSetDate(Calendar time);
     }
 
     @Override
@@ -34,7 +34,7 @@ public class DateDialogFragment extends DialogFragment {
         DatePickerDialog.OnDateSetListener d = new DatePickerDialog.OnDateSetListener() {
             public void onDateSet(DatePicker view, int year, int monthOfYear, int dayOfMonth) {
                 setDate();
-                ((YesNoListener) getActivity()).onYes(dateAndTime);
+                ((YesNoListener) getActivity()).onSetDate(dateAndTime);
             }
         };
         dialog = new DatePickerDialog(getActivity(), d,

@@ -4,6 +4,7 @@ import android.arch.persistence.room.Room;
 import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
+import android.os.Build;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
@@ -58,6 +59,13 @@ public class NoteActivity extends AppCompatActivity implements DateDialogFragmen
 
         title = findViewById(R.id.title_edit);
         text = findViewById(R.id.note_edit);
+
+        if (Build.VERSION.SDK_INT >= 26){
+            int flags = text.getSystemUiVisibility();
+            flags |= View.SYSTEM_UI_FLAG_LIGHT_NAVIGATION_BAR;
+            text.setSystemUiVisibility(flags);
+            this.getWindow().setNavigationBarColor(getColor(R.color.colorPrimary));
+        }
 
         colorPickerBackground = findViewById(R.id.check_color_background);
         colorPicker = findViewById(R.id.check_color);
@@ -148,6 +156,9 @@ public class NoteActivity extends AppCompatActivity implements DateDialogFragmen
         getSupportActionBar().setBackgroundDrawable(new ColorDrawable(color));
         text.setBackgroundColor(color);
         title.setBackgroundColor(color);
+        if (Build.VERSION.SDK_INT >= 26) {
+            this.getWindow().setNavigationBarColor(color);
+        }
     }
 
     public void processNote(){
@@ -191,7 +202,7 @@ public class NoteActivity extends AppCompatActivity implements DateDialogFragmen
     }
 
     @Override
-    public void onYes(Calendar time){
+    public void onSetDate(Calendar time){
         dateAndTime = time;
         dateToast();
     }

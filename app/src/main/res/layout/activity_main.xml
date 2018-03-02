@@ -1,10 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/container"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/colorPrimary"
     android:orientation="vertical"
     tools:context="radonsoft.firenotes.MainActivity">
 
@@ -14,37 +15,35 @@
         android:layout_height="?attr/actionBarSize"
         android:background="?attr/colorPrimary"
         app:theme="@style/MonoToolbar"
-        app:titleTextColor="@color/colorAccent" />
+        app:titleTextColor="@color/colorAccent">
 
-    <RelativeLayout
-        android:id="@+id/content"
-        android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_weight="1"
-        android:background="@color/colorPrimary">
-
-        <android.support.design.widget.FloatingActionButton
-            android:id="@+id/floatingActionButton2"
+        <android.support.design.widget.TabLayout
+            android:id="@+id/tablayout"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentBottom="true"
-            android:layout_alignParentEnd="true"
-            android:layout_marginBottom="14dp"
-            android:layout_marginEnd="16dp"
-            android:clickable="true"
-            app:srcCompat="@drawable/ic_create_white_24dp" />
-    </RelativeLayout>
+            android:layout_height="match_parent"
+            app:tabMode="scrollable"
+            app:tabTextAppearance="@style/MyCustomTextAppearance">
 
-    <android.support.design.widget.BottomNavigationView
-        android:id="@+id/navigation"
+
+        </android.support.design.widget.TabLayout>
+    </android.support.v7.widget.Toolbar>
+
+    <android.support.v4.view.ViewPager
+        android:id="@+id/viewpager"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_gravity="bottom"
-        android:layout_marginBottom="-15dp"
-        android:background="@color/cardview_light_background"
-        android:paddingBottom="5dp"
-        android:paddingTop="5dp"
-        android:theme="@style/Base.Theme.AppCompat.Light.DarkActionBar"
-        app:menu="@menu/navigation" />
+        android:layout_height="match_parent"
+        android:layout_below="@+id/main_toolbar">
 
-</LinearLayout>
+    </android.support.v4.view.ViewPager>
+
+    <android.support.design.widget.FloatingActionButton
+        android:id="@+id/floatingActionButton2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentEnd="true"
+        android:layout_marginBottom="14dp"
+        android:layout_marginEnd="16dp"
+        android:clickable="true"
+        app:srcCompat="@drawable/ic_create_white_24dp" />
+</RelativeLayout>

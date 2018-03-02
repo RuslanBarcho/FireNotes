@@ -33,7 +33,8 @@
         android:ems="10"
         android:fontFamily="@font/roboto_mono"
         android:hint="Title"
-        android:inputType="textPersonName"
+        android:inputType="textCapSentences"
+        android:maxLength="23"
         android:paddingBottom="16dp"
         android:paddingLeft="16dp"
         android:paddingRight="16dp"
@@ -53,8 +54,7 @@
         android:fontFamily="@font/roboto_mono"
         android:gravity="top"
         android:hint=">"
-        android:inputType="textMultiLine"
-        android:paddingBottom="16dp"
+        android:inputType="textMultiLine|textCapSentences"
         android:paddingLeft="16dp"
         android:paddingRight="16dp"
         android:paddingTop="8dp"
@@ -66,8 +66,7 @@
         android:id="@+id/check_color_background"
         android:layout_height="match_parent"
         android:orientation="vertical"
-        android:visibility="gone"></LinearLayout>
-
+        android:visibility="gone"/>
 
     <RadioGroup
         android:id="@+id/check_color"
@@ -150,5 +149,4 @@
             android:button="@drawable/circle_button_selector"
             android:buttonTint="#ffffff" />
     </RadioGroup>
-
 </RelativeLayout>

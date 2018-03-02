@@ -1,8 +1,9 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:background="@color/colorPrimary"
     tools:context="radonsoft.firenotes.Fragments.NoteFragment">
 
     <!-- TODO: Update blank fragment layout -->
@@ -19,9 +20,9 @@
             android:layout_height="wrap_content"
             android:layout_centerHorizontal="true"
             android:layout_centerVertical="true"
+            android:fontFamily="@font/roboto_mono"
             android:text="No notes yet"
             android:textColor="@android:color/background_dark"
-            android:fontFamily="@font/roboto_mono"
             android:textSize="24sp" />
 
         <TextView
@@ -31,9 +32,9 @@
             android:layout_below="@+id/textView2"
             android:layout_centerHorizontal="true"
             android:layout_marginTop="12dp"
+            android:fontFamily="@font/roboto_mono"
             android:text="Tap anywhere to create"
             android:textColor="@android:color/background_dark"
-            android:fontFamily="@font/roboto_mono"
             android:textSize="16sp" />
     </RelativeLayout>
 

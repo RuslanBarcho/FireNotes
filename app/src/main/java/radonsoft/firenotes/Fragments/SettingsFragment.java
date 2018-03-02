@@ -7,10 +7,11 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import radonsoft.firenotes.MainActivity;
 import radonsoft.firenotes.R;
 
 
-public class SettingsFragment extends Fragment {
+public class SettingsFragment extends Fragment implements MainActivity.FragmentLifecycle {
     View mRootView;
 
     @Override
@@ -20,5 +21,15 @@ public class SettingsFragment extends Fragment {
         Toolbar toolbar = mRootView.findViewById(R.id.main_toolbar);
         getActivity().setTitle("Settings");
         return mRootView;
+    }
+
+    @Override
+    public void onPauseFragment() {
+
+    }
+
+    @Override
+    public void onResumeFragment() {
+
     }
 }
