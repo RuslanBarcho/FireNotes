@@ -8,7 +8,6 @@ import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.text.format.DateUtils;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -134,7 +133,7 @@ public class NoteActivity extends AppCompatActivity implements DateDialogFragmen
             case (R.id.rb_blue): return Color.parseColor("#7C8FF7");
             case (R.id.rb_yellow): return Color.parseColor("#F7E272");
             case (R.id.rb_violet): return Color.parseColor("#D086E3");
-            default: return Color.parseColor("#ffffff");
+            default: return getColor(R.color.colorPrimary);
         }
     }
 
