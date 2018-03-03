@@ -17,7 +17,7 @@ import radonsoft.firenotes.Fragments.SettingsFragment;
 import radonsoft.firenotes.Helpers.ViewPagerAdapter;
 
 public class MainActivity extends AppCompatActivity  {
-    NoteFragment noteFragment = new NoteFragment();
+    NoteFragment noteFragment;
     SettingsFragment settingsFragment = new SettingsFragment();
     ViewPagerAdapter adapter;
 
@@ -32,9 +32,14 @@ public class MainActivity extends AppCompatActivity  {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        if (savedInstanceState == null){
+            noteFragment = new NoteFragment();
+            settingsFragment = new SettingsFragment();
+        } else {
+           noteFragment = (NoteFragment) getSupportFragmentManager().getFragment(savedInstanceState, "NOTES");
+        }
+
         setContentView(R.layout.activity_main);
-
-
         Toolbar toolbar = findViewById(R.id.main_toolbar);
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayShowTitleEnabled(false);
@@ -63,11 +68,12 @@ public class MainActivity extends AppCompatActivity  {
 
     private ViewPager.OnPageChangeListener pageChangeListener = new ViewPager.OnPageChangeListener() {
         @Override
-        public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
-            ((FragmentLifecycle) adapter.getItem(position)).onPauseFragment();
-        }
+        public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {}
+
         @Override
-        public void onPageSelected(int position) {}
+        public void onPageSelected(int position) {
+            if (position == 1) ((FragmentLifecycle) adapter.getItem(0)).onPauseFragment();
+        }
 
         @Override
         public void onPageScrollStateChanged(int state) {}
@@ -85,5 +91,12 @@ public class MainActivity extends AppCompatActivity  {
         Intent intent = new Intent(this, NoteActivity.class);
         intent.putExtra("editMode", false);
         startActivityForResult(intent, 1);
+    }
+
+    @Override
+    protected void onSaveInstanceState(Bundle savedInstanceState){
+        savedInstanceState.putBoolean("FRAGMENTS", true);
+        getSupportFragmentManager().putFragment(savedInstanceState, "NOTES", noteFragment);
+        super.onSaveInstanceState(savedInstanceState);
     }
 }

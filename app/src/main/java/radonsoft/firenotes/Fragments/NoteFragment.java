@@ -3,6 +3,7 @@ package radonsoft.firenotes.Fragments;
 import android.arch.persistence.room.Room;
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -36,20 +37,18 @@ public class NoteFragment extends Fragment implements MainActivity.FragmentLifec
     RecyclerViewAdapter adapter;
     AppDatabase db;
     Toolbar toolbar;
-
-    private ActionMode mActionMode;
+    ActionMode mActionMode;
 
     public List<Note> noteList = new ArrayList<>();
     private ArrayList<Integer> toDelete = new ArrayList<>();
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
+    public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         mRootView = inflater.inflate(R.layout.fragment_note, container, false);
         toolbar = mRootView.findViewById(R.id.main_toolbar);
         noNotesScreen = mRootView.findViewById(R.id.no_notes_screen);
         recyclerView = mRootView.findViewById(R.id.recycler);
-        //getActivity().setTitle("Notes");
         setHasOptionsMenu(true);
         initialNotes();
         Log.d("On create ", "Notes");
@@ -141,7 +140,7 @@ public class NoteFragment extends Fragment implements MainActivity.FragmentLifec
         startActivityForResult(intent, 1);
     }
 
-    private ActionMode.Callback mActionCallback = new ActionMode.Callback() {
+    public ActionMode.Callback mActionCallback = new ActionMode.Callback() {
         @Override
         public boolean onCreateActionMode(ActionMode actionMode, Menu menu) {
             MenuInflater inflater = getActivity().getMenuInflater();
@@ -178,12 +177,13 @@ public class NoteFragment extends Fragment implements MainActivity.FragmentLifec
 
     @Override
     public void onResume() {
-        initialNotes();
         super.onResume();
+        initialNotes();
     }
 
     @Override
     public void onPauseFragment() {
+        Log.i("TEST", "ON PAUSE FRAGMENT");
         if (mActionMode != null) mActionMode.finish();
     }
 
