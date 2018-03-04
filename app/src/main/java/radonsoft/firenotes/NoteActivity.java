@@ -69,7 +69,6 @@ public class NoteActivity extends AppCompatActivity implements DateDialogFragmen
 
         colorPickerBackground = findViewById(R.id.check_color_background);
         colorPicker = findViewById(R.id.check_color);
-        colorPicker.check(R.id.rb_white);
 
         toolbar = findViewById(R.id.note_toolbar);
         setSupportActionBar(toolbar);
@@ -103,6 +102,8 @@ public class NoteActivity extends AppCompatActivity implements DateDialogFragmen
             title.setText(note.title);
             text.setText(note.text);
             colorPicker.check(note.color);
+        } else {
+            colorPicker.check(R.id.rb_white);
         }
         setColor(parseColor(colorPicker.getCheckedRadioButtonId()));
     }

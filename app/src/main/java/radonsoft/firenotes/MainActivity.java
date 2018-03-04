@@ -1,7 +1,6 @@
 package radonsoft.firenotes;
 
 import android.content.Intent;
-import android.graphics.Color;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
@@ -10,7 +9,6 @@ import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
-import android.view.WindowManager;
 
 import radonsoft.firenotes.Fragments.NoteFragment;
 import radonsoft.firenotes.Fragments.SettingsFragment;
@@ -37,6 +35,7 @@ public class MainActivity extends AppCompatActivity  {
             settingsFragment = new SettingsFragment();
         } else {
            noteFragment = (NoteFragment) getSupportFragmentManager().getFragment(savedInstanceState, "NOTES");
+           settingsFragment = (SettingsFragment) getSupportFragmentManager().getFragment(savedInstanceState, "SETTINGS");
         }
 
         setContentView(R.layout.activity_main);
@@ -97,6 +96,7 @@ public class MainActivity extends AppCompatActivity  {
     protected void onSaveInstanceState(Bundle savedInstanceState){
         savedInstanceState.putBoolean("FRAGMENTS", true);
         getSupportFragmentManager().putFragment(savedInstanceState, "NOTES", noteFragment);
+        getSupportFragmentManager().putFragment(savedInstanceState, "SETTINGS", settingsFragment);
         super.onSaveInstanceState(savedInstanceState);
     }
 }
