@@ -1,6 +1,7 @@
 package radonsoft.firenotes;
 
 import android.content.Intent;
+import android.graphics.Color;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
@@ -54,6 +55,8 @@ public class MainActivity extends AppCompatActivity  {
             flags |= View.SYSTEM_UI_FLAG_LIGHT_NAVIGATION_BAR;
             viewPager.setSystemUiVisibility(flags);
             this.getWindow().setNavigationBarColor(getColor(R.color.colorPrimary));
+        } else{
+            this.getWindow().setNavigationBarColor(Color.parseColor("#BDBDBD"));
         }
 
         FloatingActionButton floatingActionButton = findViewById(R.id.floatingActionButton2);

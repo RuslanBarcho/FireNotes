@@ -16,6 +16,7 @@ import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.widget.EditText;
 import android.widget.LinearLayout;
+import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.Toast;
 
@@ -42,10 +43,12 @@ public class NoteActivity extends AppCompatActivity implements DateDialogFragmen
     public List<Note> noteList = new ArrayList<>();
     public Calendar dateAndTime = Calendar.getInstance();
     DateDialogFragment dateDialog = new DateDialogFragment();
+    int[] buttons = {R.id.rb_red, R.id.rb_yellow, R.id.rb_green, R.id.rb_blue, R.id.rb_violet, R.id.rb_white};
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
         if (savedInstanceState != null){
             dateAndTime = (Calendar) savedInstanceState.getSerializable("CALENDAR_");
         }
@@ -142,13 +145,19 @@ public class NoteActivity extends AppCompatActivity implements DateDialogFragmen
             case (R.id.rb_blue): return Color.parseColor("#7C8FF7");
             case (R.id.rb_yellow): return Color.parseColor("#F7E272");
             case (R.id.rb_violet): return Color.parseColor("#D086E3");
-            default: return getColor(R.color.colorPrimary);
+            default: {
+                return getColor(R.color.colorPrimary);
+            }
         }
     }
 
     private void setColorPickerVisibility(int visibility, Animation animation){
         colorPicker.startAnimation(animation);
         colorPicker.setVisibility(visibility);
+        for (int i = 0; i<6; i++){
+            RadioButton rb = findViewById(buttons[i]);
+            rb.setVisibility(visibility);
+        }
         colorPickerBackground.setVisibility(visibility);
     }
 
@@ -159,6 +168,12 @@ public class NoteActivity extends AppCompatActivity implements DateDialogFragmen
         title.setBackgroundColor(color);
         if (Build.VERSION.SDK_INT >= 26) {
             this.getWindow().setNavigationBarColor(color);
+        } else {
+            if (color == getColor(R.color.colorPrimary)){
+                this.getWindow().setNavigationBarColor(Color.parseColor("#BDBDBD"));
+            } else {
+                this.getWindow().setNavigationBarColor(color);
+            }
         }
     }
 
