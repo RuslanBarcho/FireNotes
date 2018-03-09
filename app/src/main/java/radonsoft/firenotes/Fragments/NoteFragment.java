@@ -17,6 +17,7 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.RelativeLayout;
 
 import java.util.ArrayList;
@@ -38,6 +39,7 @@ public class NoteFragment extends Fragment implements MainActivity.FragmentLifec
     AppDatabase db;
     Toolbar toolbar;
     ActionMode mActionMode;
+    Button createNote;
 
     public List<Note> noteList = new ArrayList<>();
     private ArrayList<Integer> toDelete = new ArrayList<>();
@@ -49,9 +51,18 @@ public class NoteFragment extends Fragment implements MainActivity.FragmentLifec
         toolbar = mRootView.findViewById(R.id.main_toolbar);
         noNotesScreen = mRootView.findViewById(R.id.no_notes_screen);
         recyclerView = mRootView.findViewById(R.id.recycler);
+        createNote = mRootView.findViewById(R.id.create_note);
         setHasOptionsMenu(true);
         initialNotes();
-        Log.d("On create ", "Notes");
+
+        createNote.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(getContext(), NoteActivity.class);
+                startActivityForResult(intent, 1);
+            }
+        });
+
         return mRootView;
     }
 

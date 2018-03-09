@@ -9,6 +9,7 @@
 
     <!-- TODO: Update blank fragment layout -->
 
+
     <RelativeLayout
         android:id="@+id/no_notes_screen"
         android:layout_width="match_parent"
@@ -43,16 +44,47 @@
         android:id="@+id/recycler"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:layout_above="@+id/linearLayout"
         android:paddingLeft="4dp"
         android:paddingRight="4dp"
         android:scrollbars="vertical">
 
     </android.support.v7.widget.RecyclerView>
 
-    <Button
-        android:id="@+id/button"
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/recycler"
-        android:text="Button" />
+        android:layout_alignParentBottom="true"
+        android:background="@color/colorPrimary"
+        android:orientation="vertical"
+        android:id="@+id/linearLayout">
+
+        <Button
+            android:id="@+id/create_note"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:background="@color/colorPrimary"
+            android:elevation="0dp"
+            android:paddingLeft="24dp"
+            android:stateListAnimator="@null"
+            android:text="Enter text here"
+            android:textAlignment="textStart"
+            android:textAppearance="@style/MyCustomTextAppearance"
+            android:textColor="#828282"
+            android:textSize="16sp" />
+
+        <TextView
+            android:id="@+id/line"
+            android:layout_width="match_parent"
+            android:layout_height="2dp"
+            android:layout_marginBottom="8dp"
+            android:layout_marginLeft="16dp"
+            android:layout_marginRight="16dp"
+            android:background="@color/colorAccent"
+            android:textColorLink="@color/colorPrimary" />
+
+    </LinearLayout>
+
+
 </RelativeLayout>
