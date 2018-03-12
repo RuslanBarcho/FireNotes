@@ -43,7 +43,6 @@ public class NoteActivity extends AppCompatActivity implements DateDialogFragmen
     public List<Note> noteList = new ArrayList<>();
     public Calendar dateAndTime = Calendar.getInstance();
     DateDialogFragment dateDialog = new DateDialogFragment();
-    int[] buttons = {R.id.rb_red, R.id.rb_yellow, R.id.rb_green, R.id.rb_blue, R.id.rb_violet, R.id.rb_white};
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -75,7 +74,8 @@ public class NoteActivity extends AppCompatActivity implements DateDialogFragmen
 
         toolbar = findViewById(R.id.note_toolbar);
         setSupportActionBar(toolbar);
-        getSupportActionBar().setTitle("New note");
+        getSupportActionBar().setTitle("");
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
         colorPickerBackground.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -121,6 +121,11 @@ public class NoteActivity extends AppCompatActivity implements DateDialogFragmen
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         int id = item.getItemId();
+        if (id == android.R.id.home){
+            processNote();
+            changeActivity();
+        }
+
         if (id == R.id.navbar_color){
             if (colorPicker.getVisibility() == View.VISIBLE){
                 setColorPickerVisibility(View.GONE, slideUp);
@@ -154,10 +159,6 @@ public class NoteActivity extends AppCompatActivity implements DateDialogFragmen
     private void setColorPickerVisibility(int visibility, Animation animation){
         colorPicker.startAnimation(animation);
         colorPicker.setVisibility(visibility);
-        for (int i = 0; i<6; i++){
-            RadioButton rb = findViewById(buttons[i]);
-            rb.setVisibility(visibility);
-        }
         colorPickerBackground.setVisibility(visibility);
     }
 

@@ -81,7 +81,7 @@
         android:elevation="4dp"
         android:gravity="center_horizontal"
         android:orientation="vertical"
-        android:visibility="gone">
+        android:visibility="invisible">
 
         <RadioButton
             android:id="@+id/rb_red"
