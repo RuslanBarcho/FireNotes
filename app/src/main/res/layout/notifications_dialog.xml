@@ -1,0 +1,105 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.widget.RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <LinearLayout
+        android:id="@+id/date_container"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <Button
+            android:id="@+id/set_date"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:background="@android:color/background_light"
+            android:elevation="0dp"
+            android:paddingLeft="24dp"
+            android:stateListAnimator="@null"
+            android:text="Set Date"
+            android:textAlignment="textStart"
+            android:textAppearance="@style/MyCustomTextAppearance"
+            android:textColor="#828282"
+            android:textSize="16sp" />
+
+        <TextView
+            android:id="@+id/line"
+            android:layout_width="match_parent"
+            android:layout_height="2dp"
+            android:layout_marginBottom="8dp"
+            android:layout_marginLeft="16dp"
+            android:layout_marginRight="16dp"
+            android:background="@color/colorAccent"
+            android:textColorLink="@color/colorPrimary" />
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/time_container"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/date_container"
+        android:orientation="vertical">
+
+        <Button
+            android:id="@+id/set_time"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:background="@android:color/background_light"
+            android:elevation="0dp"
+            android:paddingLeft="24dp"
+            android:stateListAnimator="@null"
+            android:text="Set Time"
+            android:textAlignment="textStart"
+            android:textAppearance="@style/MyCustomTextAppearance"
+            android:textColor="#828282"
+            android:textSize="16sp" />
+
+        <TextView
+            android:id="@+id/line1"
+            android:layout_width="match_parent"
+            android:layout_height="2dp"
+            android:layout_marginBottom="8dp"
+            android:layout_marginLeft="16dp"
+            android:layout_marginRight="16dp"
+            android:background="@color/colorAccent"
+            android:textColorLink="@color/colorPrimary" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/repeat_container"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/time_container"
+        android:orientation="vertical">
+
+        <Button
+            android:id="@+id/set_repeat"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:background="@android:color/background_light"
+            android:elevation="0dp"
+            android:paddingLeft="24dp"
+            android:stateListAnimator="@null"
+            android:text="Don't repeat"
+            android:textAlignment="textStart"
+            android:textAppearance="@style/MyCustomTextAppearance"
+            android:textColor="#828282"
+            android:textSize="16sp" />
+
+        <TextView
+            android:id="@+id/line2"
+            android:layout_width="match_parent"
+            android:layout_height="2dp"
+            android:layout_marginBottom="8dp"
+            android:layout_marginLeft="16dp"
+            android:layout_marginRight="16dp"
+            android:background="@color/colorAccent"
+            android:textColorLink="@color/colorPrimary" />
+    </LinearLayout>
+
+</android.widget.RelativeLayout>

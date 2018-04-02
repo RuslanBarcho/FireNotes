@@ -1,5 +1,6 @@
 package radonsoft.firenotes;
 
+import android.app.DialogFragment;
 import android.arch.persistence.room.Room;
 import android.content.Intent;
 import android.graphics.Color;
@@ -25,12 +26,12 @@ import java.util.Calendar;
 import java.util.List;
 
 import radonsoft.firenotes.Helpers.DateDialogFragment;
+import radonsoft.firenotes.Helpers.NotificationsDialogFragment;
 import radonsoft.firenotes.Models.Note;
 
 public class NoteActivity extends AppCompatActivity implements DateDialogFragment.YesNoListener{
 
-    EditText title;
-    EditText text;
+    EditText title, text;
     AppDatabase db;
     LinearLayout colorPickerBackground;
     Toolbar toolbar;
@@ -40,9 +41,11 @@ public class NoteActivity extends AppCompatActivity implements DateDialogFragmen
     int noteID;
     int color;
     private boolean ifEdit;
+
     public List<Note> noteList = new ArrayList<>();
     public Calendar dateAndTime = Calendar.getInstance();
     DateDialogFragment dateDialog = new DateDialogFragment();
+    NotificationsDialogFragment notificationsDialog = new NotificationsDialogFragment();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -135,10 +138,11 @@ public class NoteActivity extends AppCompatActivity implements DateDialogFragmen
         }
 
         if (id == R.id.navbar_schedule) {
-            Bundle args = new Bundle();
-            args.putSerializable("ACTIVITY_CALENDAR", dateAndTime);
-            dateDialog.setArguments(args);
-            dateDialog.show(getFragmentManager(), "tag");
+            //Bundle args = new Bundle();
+            //args.putSerializable("ACTIVITY_CALENDAR", dateAndTime);
+            //dateDialog.setArguments(args);
+            //dateDialog.show(getFragmentManager(), "tag");
+            notificationsDialog.show(getFragmentManager(), "notifications");
         }
         return super.onOptionsItemSelected(item);
     }
